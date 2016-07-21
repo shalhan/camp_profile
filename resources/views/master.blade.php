@@ -16,6 +16,8 @@
   <link rel="stylesheet" href="{{ asset("/bower_components/AdminLTE/dist/css/AdminLTE.min.css") }}">
   <!-- DataTables -->
   <link rel="stylesheet" href="{{ asset("/bower_components/AdminLTE/plugins/datatables/dataTables.bootstrap.css") }}">
+  <!-- My Own Styles -->
+  <link rel="stylesheet" href="{{ asset("/bower_components/AdminLTE/dist/css/styles.css") }}">
 
   <link rel="stylesheet" href="{{ asset("/bower_components/AdminLTE/dist/css/skins/skin-blue.min.css") }}">
 

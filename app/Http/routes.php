@@ -17,5 +17,5 @@ Route::get('/', function () {
 });
 
 Route::get('activity', function () {
-    return view('dosen.activity');
+    return view('dosen.activity-list');
 });
