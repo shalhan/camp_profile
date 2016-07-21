@@ -98,13 +98,15 @@
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <td>Trident</td>
-            <td>Internet
-              Explorer 4.0
-            </td>
-            <td>Win 95+</td>
-          </tr>
+            <tr>
+              <td>
+                  <h4 class="paper_title">Fuzzy trust for peer-to-peer based systems</h4>
+                  <p class="td_gray">F Azzedin, A Ridha, A Rizvi</p>
+                  <p class="td_gray">Proceedings of World Academy of Science, Engineering and Technology 21, 123-7</p>
+              </td>
+              <td>32</td>
+              <td>2009</td>
+            </tr>
         </tbody>
       </table>
     </div>

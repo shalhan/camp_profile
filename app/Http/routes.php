@@ -12,18 +12,13 @@
 */
 
 
-Route::get('/', function () {
-    return view('dosen.dashboard');
-});
-
-Route::get('activity', function () {
-    return view('dosen.activity-table');
-});
-
-Route::get('activity-details', function () {
-    return view('dosen.activity-details');
-});
-
-Route::get('activity-add', function () {
-    return view('dosen.activity-add');
-});
+Route::get('/', function () {return view('dosen.dashboard');});
+Route::get('activity', function () {return view('dosen.activity-table');});
+Route::get('activity-details', function () {return view('dosen.activity-details');});
+Route::get('activity-add', function () {return view('dosen.activity-add');});
+Route::get('admin-dashboard', function () {return view('admin.dashboard');});
+Route::get('activity-lecture', function () {return view('admin.activity-lecture');});
+Route::get('activity-student', function () {return view('admin.activity-student');});
+Route::get('student-dashboard', function () {return view('student.dashboard');});
+Route::get('student-activity-details', function () {return view('student.activity-details');});
+Route::get('student-activity-add', function () {return view('student.activity-add');});

@@ -21,6 +21,15 @@ img{
   font-size: 45px;
 }
 
+.paper_title{
+  margin: 0;
+}
+
+.td_gray{
+  color: rgb(148, 149, 149);
+  margin: 0;
+}
+
 @media screen and (min-width: 720px) {
   .ion-plus-circled{
     position: fixed;
