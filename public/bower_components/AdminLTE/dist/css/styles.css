@@ -1,0 +1,53 @@
+img{
+  max-width: 100%;
+}
+
+.img{
+  text-align: center;
+}
+
+.detail{
+  padding: 8px;
+}
+
+.delete{
+  color: rgb(135, 33, 20)
+}
+
+.ion-plus-circled{
+  position: fixed;
+  top: 80%;
+  left: 85%;
+  font-size: 45px;
+}
+
+@media screen and (min-width: 720px) {
+  .ion-plus-circled{
+    position: fixed;
+    top: 82%;
+    left: 88%;
+    font-size: 45px;
+  }
+}
+
+@media screen and (min-width: 820px) {
+    .img{
+      text-align: left;
+    }
+    .post-activity .box-body{
+      display: inline-flex;
+    }
+
+    .detail{
+      padding-left: 20px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+  .ion-plus-circled{
+    position: fixed;
+    top: 82%;
+    left: 94%;
+    font-size: 45px;
+  }
+}
