@@ -17,11 +17,11 @@ Route::get('/', function () {
 });
 
 Route::get('activity', function () {
-    return view('dosen.activity-list');
+    return view('dosen.activity-table');
 });
 
-Route::get('activity-table', function () {
-    return view('dosen.activity-table');
+Route::get('activity-details', function () {
+    return view('dosen.activity-details');
 });
 
 Route::get('activity-add', function () {

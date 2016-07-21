@@ -16,6 +16,8 @@
   <link rel="stylesheet" href="{{ asset("/bower_components/AdminLTE/dist/css/AdminLTE.min.css") }}">
   <!-- DataTables -->
   <link rel="stylesheet" href="{{ asset("/bower_components/AdminLTE/plugins/datatables/dataTables.bootstrap.css") }}">
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="{{ asset("/bower_components/AdminLTE/plugins/daterangepicker/daterangepicker.css") }}">
   <!-- My Own Styles -->
   <link rel="stylesheet" href="{{ asset("/bower_components/AdminLTE/dist/css/styles.css") }}">
 
@@ -76,6 +78,9 @@
 <!-- Data Tables -->
 <script src="{{ asset("/bower_components/AdminLTE/plugins/datatables/jquery.dataTables.min.js") }}"></script>
 <script src="{{ asset("/bower_components/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js") }}"></script>
+<!-- date-range-picker -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+<script src="{{ asset("/bower_components/AdminLTE/plugins/daterangepicker/daterangepicker.js") }}"></script>
 <!-- SlimScroll -->
 <script src="{{ asset("/bower_components/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js") }}"></script>
 <!-- AdminLTE App -->
@@ -177,6 +182,10 @@ makeActive = function () {
 
 for (var i = 0; i < elems.length; i++)
     elems[i].addEventListener('mousedown', makeActive);
+</script>
+<script>
+//Date range picker
+$('#reservation').daterangepicker();
 </script>
 </body>
 </html>
