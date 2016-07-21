@@ -19,3 +19,11 @@ Route::get('/', function () {
 Route::get('activity', function () {
     return view('dosen.activity-list');
 });
+
+Route::get('activity-table', function () {
+    return view('dosen.activity-table');
+});
+
+Route::get('activity-add', function () {
+    return view('dosen.activity-add');
+});
