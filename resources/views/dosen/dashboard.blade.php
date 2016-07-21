@@ -12,6 +12,11 @@
   Dashboard
 @endsection
 
+@section('sidebar')
+<li class="active"><a href="{{ url('dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+<li><a href="{{ url('activity') }}"><i class="fa fa-table"></i> <span>Activity</span></a></li>
+@endsection
+
 @section('content')
 <div class="row">
   <div class="col-md-6">
