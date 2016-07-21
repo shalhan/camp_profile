@@ -12,7 +12,8 @@
 */
 
 
-Route::get('/', function () {return view('dosen.dashboard');});
+Route::get('/', function () {return view('login');});
+Route::get('dashboard', function () {return view('dosen.dashboard');});
 Route::get('activity', function () {return view('dosen.activity-table');});
 Route::get('activity-details', function () {return view('dosen.activity-details');});
 Route::get('activity-add', function () {return view('dosen.activity-add');});

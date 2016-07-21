@@ -32,7 +32,7 @@
     <ul class="sidebar-menu">
       <li class="header">MAIN NAVIGATION</li>
       <!-- Optionally, you can add icons to the links -->
-      <li><a href="{{ url('/') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+      <li><a href="{{ url('dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
       <li><a href="{{ url('activity') }}"><i class="fa fa-table"></i> <span>Activity</span></a></li>
     </ul>
     <!-- /.sidebar-menu -->
