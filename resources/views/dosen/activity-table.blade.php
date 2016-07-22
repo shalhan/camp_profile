@@ -30,37 +30,32 @@
               <th>Start</th>
               <th>End</th>
               <th>Achievment</th>
-              <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr>
+            <tr class="select-row" data-href="{{ url('activity-details') }}">
               <td>Lomba Gemastik</td>
               <td>29 April 2016</td>
               <td>3 Mei 2016</td>
               <td>Juara 1 UI/UX</td>
-              <td><a href="/app/public/activity-details">details</a></td>
             </tr>
-            <tr>
+            <tr class="select-row">
               <td>Lomba Gemastik</td>
               <td>29 April 2016</td>
               <td>3 Mei 2016</td>
               <td>Juara 1 UI/UX</td>
-              <td><a href="/app/public/activity-details">details</a></td>
             </tr>
-            <tr>
+            <tr class="select-row">
               <td>Lomba Gemastik</td>
               <td>29 April 2016</td>
               <td>3 Mei 2016</td>
               <td>Juara 1 UI/UX</td>
-              <td><a href="/app/public/activity-details">details</a></td>
             </tr>
-            <tr>
+            <tr class="select-row">
               <td>Lomba Gemastik</td>
               <td>29 April 2016</td>
               <td>3 Mei 2016</td>
               <td>Juara 1 UI/UX</td>
-              <td><a href="/app/public/activity-details">details</a></td>
             </tr>
           </tbody>
         </table>

@@ -195,7 +195,6 @@
 </script>
 <script>
   $(function () {
-    $("#example1").DataTable();
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,
@@ -226,6 +225,13 @@ for (var i = 0; i < elems.length; i++)
 <script>
 //Date range picker
 $('#reservation').daterangepicker();
+</script>
+<script>
+jQuery(document).ready(function($) {
+    $(".select-row").click(function() {
+        window.document.location = $(this).data("href");
+    });
+});
 </script>
 
 </body>
