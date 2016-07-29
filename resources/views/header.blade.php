@@ -1,7 +1,7 @@
 <header class="main-header">
 
   <!-- Logo -->
-  <a href="{{ url('dashboard') }}" class="logo">
+  <a href="{{ url('/') }}" class="logo">
     <!-- mini logo for sidebar mini 50x50 pixels -->
     <span class="logo-mini"><b>S</b>I</span>
     <!-- logo for regular state and mobile devices -->
@@ -22,26 +22,37 @@
           <!-- Menu Toggle Button -->
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <!-- The user image in the navbar-->
-            <img src="{{ asset("/bower_components/AdminLTE/dist/img/user2-160x160.jpg") }}" class="user-image" alt="User Image">
+            <img src="{{ asset("/uploads/avatar.png") }}" class="user-image" alt="User Image">
             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-            <span class="hidden-xs">Alexander Pierce</span>
+            @if(Session::has('studentName'))
+            <span class="hidden-xs">{{ Session::get('studentName') }}</span>
+            @else
+            <span class="hidden-xs">{{ Session::get('lectureName') }}</span>
+            @endif
           </a>
+
           <ul class="dropdown-menu">
             <!-- The user image in the menu -->
             <li class="user-header">
-              <img src="{{ asset("/bower_components/AdminLTE/dist/img/user2-160x160.jpg") }}" class="img-circle" alt="User Image">
-
-              <p>
-                Alexander Pierce - Web Developer
-              </p>
+              <img src="{{ asset("/uploads/avatar.png") }}" class="img-circle" alt="User Image">
+              @if(Session::has('studentName'))
+              <p>{{Session::get('studentName')}}</p>
+              @else
+              <p>{{Session::get('lectureName')}}</p>
+              @endif
             </li>
             <!-- Menu Footer-->
             <li class="user-footer">
               <div class="pull-right">
-                <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                @if (Session::has('studentName'))
+                <a href="{{ route('logout') }}" class="btn btn-default btn-flat">Sign out</a>
+                @else
+                <a href="{{ route('signout') }}" class="btn btn-default btn-flat">Sign out</a>
+                @endif
               </div>
             </li>
           </ul>
+
         </li>
       </ul>
     </div>

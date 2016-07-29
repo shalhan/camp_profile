@@ -12,11 +12,6 @@
   Dashboard
 @endsection
 
-@section('sidebar')
-<li class="active"><a href="{{ url('dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-<li><a href="{{ url('activity') }}"><i class="fa fa-table"></i> <span>Activity</span></a></li>
-@endsection
-
 @section('content')
 <div class="row">
   <div class="col-md-6">
@@ -89,8 +84,11 @@
 <div class="row">
   <div class="col-xs-12">
     <div class="box">
-      <div class="box-header">
+      <div class="box-header clearfix">
         <h3 class="box-title">Paper Data Table</h3>
+        <div class="box-tools pull-right">
+          <a href="{{ url('get-paper') }}" class="repeat">Refresh <i class="fa fa-repeat"></i></a>
+        </div>
       </div>
       <!-- /.box-header -->
       <div class="box-body">
@@ -103,15 +101,17 @@
           </tr>
           </thead>
           <tbody>
+            @foreach($view as $row)
             <tr>
               <td>
-                  <h4 class="paper_title">Fuzzy trust for peer-to-peer based systems</h4>
-                  <p class="td_gray">F Azzedin, A Ridha, A Rizvi</p>
-                  <p class="td_gray">Proceedings of World Academy of Science, Engineering and Technology 21, 123-7</p>
+                  <h4 class="paper_title">{{ $row->judul }}</h4>
+                  <p class="td_gray">{{ $row->author }}</p>
+                  <p class="td_gray">{{ $row->jurnal }}</p>
               </td>
-              <td>32</td>
-              <td>2009</td>
+              <td>{{ $row->citedby }}</td>
+              <td>{{ $row->year }}</td>
             </tr>
+            @endforeach
         </tbody>
       </table>
     </div>

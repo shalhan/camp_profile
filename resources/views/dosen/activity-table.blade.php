@@ -12,11 +12,6 @@
   Activity
 @endsection
 
-@section('sidebar')
-<li><a href="{{ url('dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-<li class="active"><a href="{{ url('activity') }}"><i class="fa fa-table"></i> <span>Activity</span></a></li>
-@endsection
-
 @section('content')
 <div class="row">
   <div class="col-xs-12">
@@ -33,30 +28,15 @@
             </tr>
             </thead>
             <tbody>
-            <tr class="select-row" data-href="{{ url('activity-details') }}">
-              <td>Lomba Gemastik</td>
-              <td>29 April 2016</td>
-              <td>3 Mei 2016</td>
-              <td>Juara 1 UI/UX</td>
+            @foreach($view as $row)
+            <tr class="select-row" data-href="{{ url('activity-details/' . $row->id_activities) }}">
+              <input type="hidden" value="{{ $row->id_activities }}" name="id">
+              <td>{{$row->nama_kegiatan}}</td>
+              <td>{{$row->tgl_mulai}}</td>
+              <td>{{$row->tgl_selesai}}</td>
+              <td>{{$row->pencapaian}}</td>
             </tr>
-            <tr class="select-row">
-              <td>Lomba Gemastik</td>
-              <td>29 April 2016</td>
-              <td>3 Mei 2016</td>
-              <td>Juara 1 UI/UX</td>
-            </tr>
-            <tr class="select-row">
-              <td>Lomba Gemastik</td>
-              <td>29 April 2016</td>
-              <td>3 Mei 2016</td>
-              <td>Juara 1 UI/UX</td>
-            </tr>
-            <tr class="select-row">
-              <td>Lomba Gemastik</td>
-              <td>29 April 2016</td>
-              <td>3 Mei 2016</td>
-              <td>Juara 1 UI/UX</td>
-            </tr>
+            @endforeach
           </tbody>
         </table>
       </div>

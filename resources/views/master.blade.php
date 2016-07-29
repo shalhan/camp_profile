@@ -30,7 +30,7 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue fixed sidebar-mini ">
   <div class="wrapper">
 
     <!-- Main Header -->
@@ -38,7 +38,7 @@
 
     <!-- Sidebar -->
     <!-- Left side column. contains the logo and sidebar -->
-    <aside class="main-sidebar">
+    <aside class="main-sidebar ">
 
       <!-- sidebar: style can be found in sidebar.less -->
       <section class="sidebar">
@@ -46,13 +46,19 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel">
           <div class="pull-left image">
-            <img src="{{ asset("/bower_components/AdminLTE/dist/img/user2-160x160.jpg") }}" class="img-circle" alt="User Image">
+            <img src="{{ asset("/uploads/avatar.png") }}" class="img-circle" alt="User Image">
           </div>
+
           <div class="pull-left info">
-            <p>Alexander Pierce</p>
+            @if(Session::has('studentName'))
+            <p class="username">{{Session::get('studentName')}}</p>
+            @else
+            <span class="hidden-xs">{{ Session::get('lectureName') }}</span>
+            @endif
             <!-- Status -->
-            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+            <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
           </div>
+
         </div>
 
         <!-- search form (Optional) -->
@@ -71,7 +77,12 @@
         <ul class="sidebar-menu">
           <li class="header">MAIN NAVIGATION</li>
           <!-- Optionally, you can add icons to the links -->
-          @yield('sidebar')
+          @if(Session::has('studentName'))
+          <li class="active"><a href="{{ url('student-dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+          @else
+          <li class="active"><a href="{{ url('dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+          <li class="active"><a href="{{ url('activity') }}"><i class="fa fa-table"></i> <span>Activity</span></a></li>
+          @endif
         </ul>
         <!-- /.sidebar-menu -->
       </section>
@@ -205,26 +216,14 @@
     });
   });
 </script>
-<script>
-var selector, elems, makeActive;
 
-selector = '.sidebar-menu li';
-
-elems = document.querySelectorAll(selector);
-
-makeActive = function () {
-    for (var i = 0; i < elems.length; i++)
-        elems[i].classList.remove('active');
-
-    this.classList.add('active');
-};
-
-for (var i = 0; i < elems.length; i++)
-    elems[i].addEventListener('mousedown', makeActive);
-</script>
 <script>
 //Date range picker
-$('#reservation').daterangepicker();
+$('#reservation').daterangepicker({
+  locale: {
+    format: 'YYYY-MM-DD'
+  }
+});
 </script>
 <script>
 jQuery(document).ready(function($) {

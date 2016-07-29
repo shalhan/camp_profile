@@ -12,27 +12,36 @@
   Activity
 @endsection
 
-@section('sidebar')
-<li><a href="{{ url('dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-<li class="active"><a href="{{ url('activity') }}"><i class="fa fa-table"></i> <span>Activity</span></a></li>
-@endsection
-
 @section('content')
 <div class="row">
-<div class="col-md-10 col-md-offset-1">
+<div class="col-md-8 col-md-offset-2">
   <!-- general form elements -->
   <div class="box box-primary">
     <!-- /.box-header -->
-    <!-- form start -->
-    <form role="form">
+    @if (count($errors) > 0)
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+
+            @endforeach
+        </ul>
+    </div>
+    @endif
+    <form action="{{ route('insertData') }}" role="form" method="post" enctype="multipart/form-data">
+      {{ csrf_field() }}
       <div class="box-body">
         <div class="form-group">
           <label for="name">Activity Name</label>
-          <input type="text" class="form-control" id="inputName" placeholder="Enter name">
+          <input type="text" class="form-control" id="inputName" placeholder="Enter name" name="activity">
         </div>
         <div class="form-group">
           <label for="inputCategory">Category</label>
-          <input type="text" class="form-control" id="inputCategory" placeholder="Category">
+          <input type="text" class="form-control" id="inputCategory" placeholder="Category" name="category">
+        </div>
+        <div class="form-group">
+          <label for="fund">Cakupan</label>
+          <input type="text" class="form-control" id="inputSource" placeholder="Cakupan" name="cakupan">
         </div>
         <!-- Date range -->
         <div class="form-group">
@@ -42,27 +51,27 @@
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <input type="text" class="form-control pull-right" id="reservation">
+            <input type="text" class="form-control pull-right" id="reservation" name="daterange">
           </div>
           <!-- /.input group -->
         </div>
         <div class="form-group">
           <label for="fund">Source of funds</label>
-          <input type="text" class="form-control" id="inputSource" placeholder="Source of funds">
+          <input type="text" class="form-control" id="inputSource" placeholder="Source of funds" name="fund">
         </div>
         <div class="form-group">
           <label for="achievement">Achievement</label>
-          <input type="text" class="form-control" id="inputAchievement" placeholder="Achievement">
+          <input type="text" class="form-control" id="inputAchievement" placeholder="Achievement" name="achievement">
         </div>
               <!-- /.input group -->
         <div class="form-group">
           <label>Description</label>
-          <textarea class="form-control" rows="3" placeholder="Description"></textarea>
+          <textarea class="form-control" rows="3" placeholder="Description" name="description"></textarea>
         </div>
 
         <div class="form-group">
           <label for="exampleInputFile">Image</label>
-          <input type="file" id="image">
+          <input type="file" id="image" name="imgActivities">
         </div>
 
       </div>
@@ -73,7 +82,7 @@
       </div>
     </form>
   </div>
-</div>
-</div>
+  </div>
+  </div>
 
 @endsection
