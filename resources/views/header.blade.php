@@ -26,8 +26,10 @@
             <!-- hidden-xs hides the username on small devices so only the image appears. -->
             @if(Session::has('studentName'))
             <span class="hidden-xs">{{ Session::get('studentName') }}</span>
-            @else
+            @elseif(Session::has('lectureId'))
             <span class="hidden-xs">{{ Session::get('lectureName') }}</span>
+            @else
+            <span class="hidden-xs">{{ Session::get('admin') }}</span>
             @endif
           </a>
 
@@ -37,8 +39,10 @@
               <img src="{{ asset("/uploads/avatar.png") }}" class="img-circle" alt="User Image">
               @if(Session::has('studentName'))
               <p>{{Session::get('studentName')}}</p>
-              @else
+              @elseif(Session::has('lectureId'))
               <p>{{Session::get('lectureName')}}</p>
+              @else
+                <p>{{ Session::get('admin') }}</p>
               @endif
             </li>
             <!-- Menu Footer-->
@@ -46,6 +50,8 @@
               <div class="pull-right">
                 @if (Session::has('studentName'))
                 <a href="{{ route('logout') }}" class="btn btn-default btn-flat">Sign out</a>
+                @elseif (Session::has('lectureId'))
+                <a href="{{ route('endsession') }}" class="btn btn-default btn-flat">Sign out</a>
                 @else
                 <a href="{{ route('signout') }}" class="btn btn-default btn-flat">Sign out</a>
                 @endif

@@ -52,9 +52,12 @@
           <div class="pull-left info">
             @if(Session::has('studentName'))
             <p class="username">{{Session::get('studentName')}}</p>
+            @elseif(Session::has('lectureId'))
+            <p class="username">{{ Session::get('lectureName') }}</p>
             @else
-            <span class="hidden-xs">{{ Session::get('lectureName') }}</span>
+            <p class="username">{{ Session::get('admin') }}</p>
             @endif
+            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             <!-- Status -->
             <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
           </div>
@@ -79,9 +82,14 @@
           <!-- Optionally, you can add icons to the links -->
           @if(Session::has('studentName'))
           <li class="active"><a href="{{ url('student-dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-          @else
+          @elseif (Session::has('lectureId'))
           <li class="active"><a href="{{ url('dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
           <li class="active"><a href="{{ url('activity') }}"><i class="fa fa-table"></i> <span>Activity</span></a></li>
+          @else
+          <li class="active"><a href="{{ route('admin-dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+          <li><a href="{{ route('activity-lecture') }}"><i class="fa fa-table"></i> <span>Lecture</span></a></li>
+          <li><a href="{{ route('activity-student') }}"><i class="fa fa-book"></i> <span>Student</span></a></li>
+            <li><a href="{{ route('activity-student') }}"><i class="fa fa-cog"></i> <span>Settings</span></a></li>
           @endif
         </ul>
         <!-- /.sidebar-menu -->
@@ -232,6 +240,14 @@ jQuery(document).ready(function($) {
     });
 });
 </script>
+
+<script>
+$('.carousel').carousel({
+  interval: 3500
+})
+</script>
+
+
 
 </body>
 </html>

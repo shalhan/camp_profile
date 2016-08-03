@@ -13,6 +13,7 @@
 @endsection
 
 @section('content')
+
 <div class="row">
   <div class="col-md-6">
     <!-- BAR CHART -->
@@ -37,10 +38,23 @@
   <div class="col-lg-3 col-xs-6">
     <!-- small box citation -->
     <div class="small-box bg-green">
+      <div class="hidden">
+      {{$citation=0}}
+      {{$totalPaper=0}}
+      {{$hindex=0}}
+      @foreach($view as $row)
+        {{$citation+=(int)$row->citedby}}
+        {{$totalPaper++}}
+        @if($hindex > $row->citedby)
+          $hindex+=1
+        @endif
+      @endforeach
+      </div>
       <div class="inner">
-        <h3>124</h3>
+        <h3>{{$citation}}</h3>
         <p>Citation</p>
       </div>
+
       <div class="icon">
         <i class="ion ion-stats-bars"></i>
       </div>
@@ -48,7 +62,7 @@
     <!-- small box hindex-->
     <div class="small-box bg-yellow">
       <div class="inner">
-        <h3>6</h3>
+        <h3>{{$hindex}}</h3>
         <p>H-Index</p>
       </div>
       <div class="icon">
@@ -71,7 +85,7 @@
     <!-- small box total-->
     <div class="small-box bg-aqua">
       <div class="inner">
-        <h3>24</h3>
+        <h3>{{$totalPaper}}</h3>
         <p>Total Paper</p>
       </div>
       <div class="icon">

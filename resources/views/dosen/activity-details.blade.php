@@ -25,8 +25,19 @@
         </div>
       </div>
       <div class="box-body">
-        <div class="img">
-          <img src="{{ asset ("/uploads/$row->img") }}"><br><br>
+        <div id="carousel-example-generic" class="carousel slide">
+          <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+          </ol>
+          <div class="carousel-inner">
+            <div class="item active">
+              <img src="{{ asset('uploads/1469678038.jpg') }}">
+            </div>
+            <div class="item">
+              <img src="{{ asset('uploads/avatar.png') }}">
+            </div>
+          </div>
         </div>
         <div class="detail">
           <div class="cakupan">Cakupan : {{ ucwords($row->cakupan) }}</div>

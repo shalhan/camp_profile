@@ -31,15 +31,23 @@ Route::group(['middleware' => 'lecture'], function(){
   Route::get('activity-add', function () {return view('dosen.activity-add');});
   Route::get('activity-details/{id}', 'LectureController@getDetail');
   Route::get('activity-details/delete/{id}', 'LectureController@deleteDetail');
-
-  //Admin
-  Route::get('admin-dashboard', function () {return view('admin.dashboard');});
-  Route::get('admin-activity-lecture', function () {return view('admin.activity-lecture');});
-  Route::get('admin-activity-student', function () {return view('admin.activity-student');});
   Route::post('insertData', [
     'uses' => 'LectureController@insertActivity',
     'as' => 'insertData'
   ]);
+  Route::get('endsession', [
+    'uses' => 'UserController@logout',
+    'as' => 'endsession'
+  ]);
+});
+
+Route::group(['middleware' => 'admin'], function(){
+  //Admin
+  Route::get('admin-dashboard', ['uses'=>'AdminController@getAdmin', 'as'=>'admin-dashboard']);
+  Route::get('activity-lecture', ['uses'=>'AdminController@getLecture', 'as'=>'activity-lecture']);
+  Route::get('activity-details', ['uses'=>'AdminController@getDetail', 'as'=>'activity-details']);
+  Route::get('activity-student', ['uses'=>'AdminController@getStudent', 'as'=>'activity-student']);
+  Route::get('get-paper', ['uses'=>'PaperController@insertAllPaper', 'as'=>'get-paper']);
   Route::get('signout', [
     'uses' => 'UserController@logout',
     'as' => 'signout'
@@ -50,6 +58,7 @@ Route::group(['middleware' => 'lecture'], function(){
 Route::group(['middleware' => 'student'], function(){
   Route::get('student-dashboard', 'StudentController@getData');
   Route::get('student-activity-details/{id}', 'StudentController@getDetail');
+  Route::post('student-activity-details/upload/{id}', 'StudentController@insertImg');
   Route::get('student-activity-details/delete/{id}', 'StudentController@deleteDetail');
   Route::get('student-activity-add', function () {return view('student.activity-add');});
   Route::get('logout', [
