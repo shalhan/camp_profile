@@ -26,13 +26,13 @@ Route::group(['middleware' => 'tamu'], function(){
 Route::group(['middleware' => 'lecture'], function(){
   Route::get('dashboard', ['uses'=>'PaperController@getPaper', 'as'=>'dashboard']);
   Route::get('get-paper', ['uses'=>'PaperController@insertAllPaper', 'as'=>'get-paper']);
-  Route::get('activity', ['uses'=>'LectureController@getActivity', 'as'=>'activity']);
+  Route::get('activity', ['uses'=>'ActivityController@getActivity', 'as'=>'activity']);
   Route::get('activity-details', function () {return view('dosen.activity-details');});
   Route::get('activity-add', function () {return view('dosen.activity-add');});
-  Route::get('activity-details/{id}', 'LectureController@getDetail');
-  Route::get('activity-details/delete/{id}', 'LectureController@deleteDetail');
+  Route::get('activity-details/{id}', 'ActivityController@getDetail');
+  Route::get('activity-details/delete/{id}', 'ActivityController@deleteDetail');
   Route::post('insertData', [
-    'uses' => 'LectureController@insertActivity',
+    'uses' => 'ActivityController@insertActivity',
     'as' => 'insertData'
   ]);
   Route::get('endsession', [
@@ -56,17 +56,17 @@ Route::group(['middleware' => 'admin'], function(){
 
 //Student
 Route::group(['middleware' => 'student'], function(){
-  Route::get('student-dashboard', 'StudentController@getData');
-  Route::get('student-activity-details/{id}', 'StudentController@getDetail');
-  Route::post('student-activity-details/upload/{id}', 'StudentController@insertImg');
-  Route::get('student-activity-details/delete/{id}', 'StudentController@deleteDetail');
+  Route::get('student-dashboard', 'ActivityController@getActivity');
+  Route::get('student-activity-details/{id}', 'ActivityController@getDetail');
+  Route::post('student-activity-details/upload/{id}', 'ActivityController@insertImg');
+  Route::get('student-activity-details/delete/{id}', 'ActivityController@deleteDetail');
   Route::get('student-activity-add', function () {return view('student.activity-add');});
   Route::get('logout', [
     'uses' => 'UserController@logout',
     'as' => 'logout'
   ]);
   Route::post('insertActivity', [
-    'uses' => 'StudentController@insertData',
+    'uses' => 'ActivityController@insertActivity',
     'as' => 'insertActivity'
   ]);
 

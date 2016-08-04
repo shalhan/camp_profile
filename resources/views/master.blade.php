@@ -20,6 +20,8 @@
   <link rel="stylesheet" href="{{ asset("/bower_components/AdminLTE/plugins/daterangepicker/daterangepicker.css") }}">
   <!-- My Own Styles -->
   <link rel="stylesheet" href="{{ asset("/bower_components/AdminLTE/dist/css/styles.css") }}">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="{{ asset("/bower_components/AdminLTE/plugins/select2/select2.min.css")}}">
 
   <link rel="stylesheet" href="{{ asset("/bower_components/AdminLTE/dist/css/skins/skin-blue.min.css") }}">
 
@@ -132,6 +134,8 @@
 <script src="{{ asset("/bower_components/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js") }}"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="{{ asset("/bower_components/AdminLTE/bootstrap/js/bootstrap.min.js") }}"></script>
+<!-- Select2 -->
+<script src="{{ asset("/bower_components/AdminLTE/plugins/select2/select2.full.min.js")}}"></script>
 <!-- ChartJS 1.0.1 -->
 <script src="{{ asset("/bower_components/AdminLTE/plugins/chartjs/Chart.min.js") }}"></script>
 <!-- Data Tables -->
@@ -147,6 +151,7 @@
 
 
 <script>
+  $(".select2").select2();
   //-------------
   //- BAR CHART -
   //-------------
@@ -241,11 +246,6 @@ jQuery(document).ready(function($) {
 });
 </script>
 
-<script>
-$('.carousel').carousel({
-  interval: 3500
-})
-</script>
 
 
 

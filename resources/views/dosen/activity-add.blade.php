@@ -68,12 +68,6 @@
           <label>Description</label>
           <textarea class="form-control" rows="3" placeholder="Description" name="description"></textarea>
         </div>
-
-        <div class="form-group">
-          <label for="exampleInputFile">Image</label>
-          <input type="file" id="image" name="imgActivities">
-        </div>
-
       </div>
       <!-- /.box-body -->
 

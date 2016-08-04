@@ -40,6 +40,10 @@
           </div>
         </div>
         <div class="detail">
+          <div class="form-group">
+            <label for="exampleInputFile">Image</label>
+            <input type="file" id="image" name="imgActivities">
+          </div>
           <div class="cakupan">Cakupan : {{ ucwords($row->cakupan) }}</div>
           <div class="start-date">Mulai : {{ $row->tgl_mulai }}</div>
           <div class="end-date">Selesai : {{ $row->tgl_selesai }}</div>
