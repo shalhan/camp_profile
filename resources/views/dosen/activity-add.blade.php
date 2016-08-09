@@ -32,20 +32,35 @@
       {{ csrf_field() }}
       <div class="box-body">
         <div class="form-group">
-          <label for="name">Activity Name</label>
+          <label for="name">Nama Kegiatan</label>
           <input type="text" class="form-control" id="inputName" placeholder="Enter name" name="activity">
         </div>
-        <div class="form-group">
-          <label for="inputCategory">Category</label>
-          <input type="text" class="form-control" id="inputCategory" placeholder="Category" name="category">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Kategori</label>
+              <select class="form-control select2" style="width: 100%;">
+                <!-- <option selected="selected">Lomba</option> -->
+                @foreach($viewCat as $row)
+                <option>{{$row->nama}}</option>
+                @endforeach
+              </select>
+            </div>
         </div>
-        <div class="form-group">
-          <label for="fund">Cakupan</label>
-          <input type="text" class="form-control" id="inputSource" placeholder="Cakupan" name="cakupan">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Cakupan</label>
+            <select class="form-control select2" style="width: 100%;">
+              @foreach($viewCak as $row)
+              <option>{{$row->nama}}</option>
+              @endforeach
+            </select>
+          </div>
         </div>
+    </div>
         <!-- Date range -->
         <div class="form-group">
-          <label>Date range:</label>
+          <label>Lama Kegiatan</label>
 
           <div class="input-group">
             <div class="input-group-addon">
@@ -56,16 +71,16 @@
           <!-- /.input group -->
         </div>
         <div class="form-group">
-          <label for="fund">Source of funds</label>
+          <label for="fund">Sumber Dana</label>
           <input type="text" class="form-control" id="inputSource" placeholder="Source of funds" name="fund">
         </div>
         <div class="form-group">
-          <label for="achievement">Achievement</label>
+          <label for="achievement">Pencapaian</label>
           <input type="text" class="form-control" id="inputAchievement" placeholder="Achievement" name="achievement">
         </div>
               <!-- /.input group -->
         <div class="form-group">
-          <label>Description</label>
+          <label>Deskripsi</label>
           <textarea class="form-control" rows="3" placeholder="Description" name="description"></textarea>
         </div>
       </div>

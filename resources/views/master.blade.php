@@ -25,6 +25,8 @@
 
   <link rel="stylesheet" href="{{ asset("/bower_components/AdminLTE/dist/css/skins/skin-blue.min.css") }}">
 
+  <link rel="stylesheet" href="{{ asset("/bower_components/AdminLTE/dist/treeview/jqueryFileTree.css") }}">
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -91,7 +93,7 @@
           <li class="active"><a href="{{ route('admin-dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
           <li><a href="{{ route('activity-lecture') }}"><i class="fa fa-table"></i> <span>Lecture</span></a></li>
           <li><a href="{{ route('activity-student') }}"><i class="fa fa-book"></i> <span>Student</span></a></li>
-            <li><a href="{{ route('activity-student') }}"><i class="fa fa-cog"></i> <span>Settings</span></a></li>
+          <li><a href="{{ route('setting') }}"><i class="fa fa-cog"></i> <span>Settings</span></a></li>
           @endif
         </ul>
         <!-- /.sidebar-menu -->
@@ -113,7 +115,6 @@
           <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
           <li class="active">@yield('breadcrumb')</li>
         </ol>
-      </section>
 
       <!-- Main content -->
       <section class="content">
@@ -149,6 +150,38 @@
 <!-- AdminLTE App -->
 <script src="{{ asset("/bower_components/AdminLTE/dist/js/app.min.js") }}"></script>
 
+<script src="{{ asset("/bower_components/AdminLTE/dist/treeview/jquery.easing.js") }}"></script>
+<script src="{{ asset("/bower_components/AdminLTE/dist/treeview/jqueryFileTree.js") }}"></script>
+
+
+<script>
+function changeCat(id){
+  document.getElementById("category" + id).innerHTML = '<div class="input-group input-group-sm"><input type="text" class="form-control" name="category" placeholder="input category.."><span class="input-group-btn"><button type="submit" class="btn btn-info btn-flat"><i class="fa fa-check"></i></button><button type="button" class="btn btn-info btn-danger"><i class="fa fa-times"></i></button></span></div>';
+}
+
+function changeCak(id){
+  document.getElementById("cakupan" + id).innerHTML = '<div class="input-group input-group-sm"><input type="text" class="form-control" name="category" placeholder="input cakupan.."><span class="input-group-btn"><button type="submit" class="btn btn-info btn-flat"><i class="fa fa-check"></i></button><button type="button" class="btn btn-info btn-danger"><i class="fa fa-times"></i></button></span></div>';
+}
+
+function addCat(count){
+  var table = document.getElementById("category-table");
+    var row = table.insertRow(count);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    cell1.innerHTML = '<form action="{{route('add-category')}}" method="post">{{csrf_field()}}<div class="input-group input-group-sm"><input type="text" class="form-control" name="newcategory" placeholder="input new category.."><span class="input-group-btn"><button type="submit" class="btn btn-info btn-flat"><i class="fa fa-check"></i></button><button type="button" class="btn btn-info btn-danger"><i class="fa fa-times"></i></button></span></div></form>';
+
+}
+
+function addCak(count){
+  var table = document.getElementById("cakupan-table");
+    var row = table.insertRow(count);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    cell1.innerHTML = '<form action="{{route('add-cakupan')}}" method="post">{{csrf_field()}}<div class="input-group input-group-sm"><input type="text" class="form-control" name="newcakupan" placeholder="input new category.."><span class="input-group-btn"><button type="submit" class="btn btn-info btn-flat"><i class="fa fa-check"></i></button><button type="button" class="btn btn-info btn-danger"><i class="fa fa-times"></i></button></span></div></form>';
+}
+
+
+</script>
 
 <script>
   $(".select2").select2();
@@ -219,6 +252,7 @@
 </script>
 <script>
   $(function () {
+    $("#example1").DataTable();
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,

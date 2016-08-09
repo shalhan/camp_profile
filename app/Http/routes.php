@@ -48,6 +48,12 @@ Route::group(['middleware' => 'admin'], function(){
   Route::get('activity-details', ['uses'=>'AdminController@getDetail', 'as'=>'activity-details']);
   Route::get('activity-student', ['uses'=>'AdminController@getStudent', 'as'=>'activity-student']);
   Route::get('get-paper', ['uses'=>'PaperController@insertAllPaper', 'as'=>'get-paper']);
+  Route::get('setting', ['uses'=>'AdminController@getSetting', 'as'=>'setting']);
+  Route::post('setting/update-category/{id}', ['uses'=>'AdminController@updateCategory', 'as'=>'update-category']);
+  Route::get('setting/delete-category/{id}', ['uses'=>'AdminController@deleteCategory', 'as'=>'delete-category']);
+    Route::get('setting/delete-cakupan/{id}', ['uses'=>'AdminController@deleteCakupan', 'as'=>'delete-cakupan']);
+  Route::post('add-category', ['uses'=>'AdminController@addCategory', 'as'=>'add-category']);
+  Route::post('add-cakupan', ['uses'=>'AdminController@addCakupan', 'as'=>'add-cakupan']);
   Route::get('signout', [
     'uses' => 'UserController@logout',
     'as' => 'signout'
@@ -60,7 +66,7 @@ Route::group(['middleware' => 'student'], function(){
   Route::get('student-activity-details/{id}', 'ActivityController@getDetail');
   Route::post('student-activity-details/upload/{id}', 'ActivityController@insertImg');
   Route::get('student-activity-details/delete/{id}', 'ActivityController@deleteDetail');
-  Route::get('student-activity-add', function () {return view('student.activity-add');});
+  Route::get('student-activity-add', 'ActivityController@getAddActivity');
   Route::get('logout', [
     'uses' => 'UserController@logout',
     'as' => 'logout'

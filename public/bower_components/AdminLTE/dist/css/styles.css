@@ -30,7 +30,7 @@ img{
   margin: 0;
 }
 
-.select-row{
+.select-row, .click{
   cursor: pointer;
 }
 
@@ -41,6 +41,29 @@ p.username{
 .repeat{
   font-size: 16px;
   pointer: cursor;
+}
+
+.setting{
+  display: inline-flex;
+}
+
+.setting .edit{
+  margin-right: 5px;
+}
+
+.setting .accept{
+  margin-left: 5px;
+}
+
+.set-edit{
+  display: none;
+}
+
+.add{
+  color: #00B16A;
+  padding: 6px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 @media screen and (min-width: 720px) {
