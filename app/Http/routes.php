@@ -64,7 +64,7 @@ Route::group(['middleware' => 'admin'], function(){
 Route::group(['middleware' => 'student'], function(){
   Route::get('student-dashboard', 'ActivityController@getActivity');
   Route::get('student-activity-details/{id}', 'ActivityController@getDetail');
-  Route::post('student-activity-details/upload/{id}', 'ActivityController@insertImg');
+  Route::post('student-activity-details/upload/{id}', 'ActivityController@insertFile');
   Route::get('student-activity-details/delete/{id}', 'ActivityController@deleteDetail');
   Route::get('student-activity-add', 'ActivityController@getAddActivity');
   Route::get('logout', [
