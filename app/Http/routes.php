@@ -30,7 +30,9 @@ Route::group(['middleware' => 'lecture'], function(){
   Route::get('activity-details', function () {return view('dosen.activity-details');});
   Route::get('activity-add', function () {return view('dosen.activity-add');});
   Route::get('activity-details/{id}', 'ActivityController@getDetail');
+  Route::post('activity-details/upload/{id}', 'ActivityController@insertFile');
   Route::get('activity-details/delete/{id}', 'ActivityController@deleteDetail');
+  Route::get('activity-details/delete-file/{id}', 'ActivityController@deleteFile');
   Route::post('insertData', [
     'uses' => 'ActivityController@insertActivity',
     'as' => 'insertData'
@@ -51,7 +53,7 @@ Route::group(['middleware' => 'admin'], function(){
   Route::get('setting', ['uses'=>'AdminController@getSetting', 'as'=>'setting']);
   Route::post('setting/update-category/{id}', ['uses'=>'AdminController@updateCategory', 'as'=>'update-category']);
   Route::get('setting/delete-category/{id}', ['uses'=>'AdminController@deleteCategory', 'as'=>'delete-category']);
-    Route::get('setting/delete-cakupan/{id}', ['uses'=>'AdminController@deleteCakupan', 'as'=>'delete-cakupan']);
+  Route::get('setting/delete-cakupan/{id}', ['uses'=>'AdminController@deleteCakupan', 'as'=>'delete-cakupan']);
   Route::post('add-category', ['uses'=>'AdminController@addCategory', 'as'=>'add-category']);
   Route::post('add-cakupan', ['uses'=>'AdminController@addCakupan', 'as'=>'add-cakupan']);
   Route::get('signout', [
