@@ -1,6 +1,7 @@
 /vendor
 /node_modules
 /public/storage
+/Http/Controllers/UserController.php
 Homestead.yaml
 Homestead.json
 .env

@@ -47,7 +47,7 @@ Route::group(['middleware' => 'admin'], function(){
   //Admin
   Route::get('admin-dashboard', ['uses'=>'AdminController@getAdmin', 'as'=>'admin-dashboard']);
   Route::get('activity-lecture', ['uses'=>'AdminController@getLecture', 'as'=>'activity-lecture']);
-  Route::get('activity-details', ['uses'=>'AdminController@getDetail', 'as'=>'activity-details']);
+  Route::get('activity-details/{id}', ['uses'=>'AdminController@getDetail', 'as'=>'activity-details']);
   Route::get('activity-student', ['uses'=>'AdminController@getStudent', 'as'=>'activity-student']);
   Route::get('get-paper', ['uses'=>'PaperController@insertAllPaper', 'as'=>'get-paper']);
   Route::get('setting', ['uses'=>'AdminController@getSetting', 'as'=>'setting']);
@@ -69,6 +69,7 @@ Route::group(['middleware' => 'student'], function(){
   Route::post('student-activity-details/upload/{id}', 'ActivityController@insertFile');
   Route::get('student-activity-details/delete/{id}', 'ActivityController@deleteDetail');
   Route::get('student-activity-details/delete-file/{id}', 'ActivityController@deleteFile');
+  Route::get('student-activity-details/download/{id}', 'ActivityController@downloadFile');
   Route::get('student-activity-add', 'ActivityController@getAddActivity');
   Route::get('logout', [
     'uses' => 'UserController@logout',
