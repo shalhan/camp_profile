@@ -42,11 +42,15 @@
       {{$citation=0}}
       {{$totalPaper=0}}
       {{$hindex=0}}
+      {{$i10index=0}}
       @foreach($view as $row)
         {{$citation+=(int)$row->citedby}}
         {{$totalPaper++}}
         @if($hindex > $row->citedby)
           $hindex+=1
+        @endif
+        @if($row->citedby >= 10)
+          $i10index++;
         @endif
       @endforeach
       </div>
@@ -75,7 +79,7 @@
     <!-- small box total-->
     <div class="small-box bg-red">
       <div class="inner">
-        <h3>5</h3>
+        <h3>{{$i10index}}</h3>
         <p>i10-Index</p>
       </div>
       <div class="icon">
@@ -100,9 +104,6 @@
     <div class="box">
       <div class="box-header clearfix">
         <h3 class="box-title">Paper Data Table</h3>
-        <div class="box-tools pull-right">
-          <a href="{{ url('get-paper') }}" class="repeat">Refresh <i class="fa fa-repeat"></i></a>
-        </div>
       </div>
       <!-- /.box-header -->
       <div class="box-body">
