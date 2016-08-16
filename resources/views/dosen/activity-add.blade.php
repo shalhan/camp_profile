@@ -39,10 +39,10 @@
           <div class="col-md-6">
             <div class="form-group">
               <label>Kategori</label>
-              <select class="form-control select2" style="width: 100%;">
+              <select class="form-control select2" style="width: 100%;" name="category">
                 <!-- <option selected="selected">Lomba</option> -->
                 @foreach($viewCat as $row)
-                <option>{{$row->nama}}</option>
+                <option>{{$row->nama_cat}}</option>
                 @endforeach
               </select>
             </div>
@@ -50,7 +50,7 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>Cakupan</label>
-            <select class="form-control select2" style="width: 100%;">
+            <select class="form-control select2" style="width: 100%;" name="cakupan">
               @foreach($viewCak as $row)
               <option>{{$row->nama}}</option>
               @endforeach

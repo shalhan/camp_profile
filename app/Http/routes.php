@@ -28,7 +28,7 @@ Route::group(['middleware' => 'lecture'], function(){
   Route::get('get-paper', ['uses'=>'PaperController@insertAllPaper', 'as'=>'get-paper']);
   Route::get('activity', ['uses'=>'ActivityController@getActivity', 'as'=>'activity']);
   Route::get('activity-details', function () {return view('dosen.activity-details');});
-  Route::get('activity-add', function () {return view('dosen.activity-add');});
+  Route::get('activity-add', 'ActivityController@getAddActivity');
   Route::get('activity-details/{id}', 'ActivityController@getDetail');
   Route::post('activity-details/upload/{id}', 'ActivityController@insertFile');
   Route::get('activity-details/delete/{id}', 'ActivityController@deleteDetail');
