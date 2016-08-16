@@ -42,7 +42,7 @@
               <select class="form-control select2" style="width: 100%;" name="category">
                 <!-- <option selected="selected">Lomba</option> -->
                 @foreach($viewCat as $row)
-                <option>{{$row->nama_cat}}</option>
+                <option value="{{$row->id_category}}">{{$row->nama_cat}}</option>
                 @endforeach
               </select>
             </div>
@@ -52,7 +52,7 @@
             <label>Cakupan</label>
             <select class="form-control select2" style="width: 100%;" name="cakupan">
               @foreach($viewCak as $row)
-              <option>{{$row->nama}}</option>
+              <option value="{{$row->id_cakupan}}">{{$row->nama}}</option>
               @endforeach
             </select>
           </div>
