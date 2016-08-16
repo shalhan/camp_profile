@@ -29,8 +29,7 @@
             </thead>
             <tbody>
             @foreach($view as $row)
-            <tr class="select-row" data-href="{{ url('activity-details/' . $row->id_activities) }}">
-              <input type="hidden" value="{{ $row->id_activities }}" name="id">
+            <tr class="select-row" data-href="{{ url('lec-activity-details/' . $row->id_activities) }}">
               <td>{{$row->nama_kegiatan}}</td>
               <td>{{$row->tgl_mulai}}</td>
               <td>{{$row->tgl_selesai}}</td>

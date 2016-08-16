@@ -61,7 +61,7 @@
               <th></th>
               <th>Nama</th>
               <th></th>
-              <th style="width: 40px"></th>
+              <th style="width: 50px"></th>
             </tr>
             @foreach($file as $row)
             <tr>
@@ -81,7 +81,10 @@
 
               <td>{{$row->file}}</td>
               <td></td>
-              <td><a href="{{ url('activity-details/delete-file/'. $row->id_files) }}" ><i class="fa fa-trash"></i></a></td>
+              <td>
+                <a href="{{ url('activity-details/download/'. $row->id_files) }}" ><i class="fa fa-download black"></i></a>
+                <a href="{{ url('activity-details/delete-file/'. $row->id_files) }}" ><i class="fa fa-trash"></i></a>
+              </td>
             </tr>
             @endforeach
         </tbody>

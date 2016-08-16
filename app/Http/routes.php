@@ -27,12 +27,12 @@ Route::group(['middleware' => 'lecture'], function(){
   Route::get('dashboard', ['uses'=>'PaperController@getPaper', 'as'=>'dashboard']);
   Route::get('get-paper', ['uses'=>'PaperController@insertAllPaper', 'as'=>'get-paper']);
   Route::get('activity', ['uses'=>'ActivityController@getActivity', 'as'=>'activity']);
-  Route::get('activity-details', function () {return view('dosen.activity-details');});
   Route::get('activity-add', 'ActivityController@getAddActivity');
-  Route::get('activity-details/{id}', 'ActivityController@getDetail');
+  Route::get('lec-activity-details/{id}', 'ActivityController@getDetail');
   Route::post('activity-details/upload/{id}', 'ActivityController@insertFile');
   Route::get('activity-details/delete/{id}', 'ActivityController@deleteDetail');
   Route::get('activity-details/delete-file/{id}', 'ActivityController@deleteFile');
+  Route::get('activity-details/download/{id}', 'ActivityController@downloadFile');
   Route::post('insertData', [
     'uses' => 'ActivityController@insertActivity',
     'as' => 'insertData'
