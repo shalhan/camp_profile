@@ -46,6 +46,7 @@ Route::group(['middleware' => 'lecture'], function(){
 Route::group(['middleware' => 'admin'], function(){
   //Admin
   Route::get('admin-dashboard', ['uses'=>'AdminController@getAdmin', 'as'=>'admin-dashboard']);
+  Route::get('paper', ['uses'=>'PaperController@getPaperSummary', 'as'=>'paper']);
   Route::get('activity-lecture', ['uses'=>'AdminController@getLecture', 'as'=>'activity-lecture']);
   Route::get('activity-details/{id}', ['uses'=>'AdminController@getDetail', 'as'=>'activity-details']);
   Route::get('activity-student', ['uses'=>'AdminController@getStudent', 'as'=>'activity-student']);

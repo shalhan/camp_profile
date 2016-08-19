@@ -91,6 +91,7 @@
           <li class="active"><a href="{{ url('activity') }}"><i class="fa fa-table"></i> <span>Activity</span></a></li>
           @else
           <li class="active"><a href="{{ route('admin-dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+            <li><a href="{{ route('paper') }}"><i class="fa fa-file-text-o"></i> <span>Paper</span></a></li>
           <li><a href="{{ route('activity-lecture') }}"><i class="fa fa-table"></i> <span>Lecture</span></a></li>
           <li><a href="{{ route('activity-student') }}"><i class="fa fa-book"></i> <span>Student</span></a></li>
           <li><a href="{{ route('setting') }}"><i class="fa fa-cog"></i> <span>Settings</span></a></li>

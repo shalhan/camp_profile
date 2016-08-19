@@ -24,65 +24,6 @@ class AdminController extends Controller
       return view('admin.dashboard', compact('view'));
     }
 
-    public function getPaperSummary(){
-      $query = Paper::select('nama', 'citedby', 'url')
-        ->join('lectures', 'papers.id_dosen', '=', 'lectures.url');
-
-      $view = $query->get();
-
-      $counter = $query->first()->url;
-      $citation = 0;
-      $hIndex = 0;
-      $i10Index = 0;
-      $i = 0;
-
-      $data=array();
-
-      foreach($view as $row){
-        if($counter == $row->url){
-          $nama = $row->nama;
-          if($row->citedby > $hIndex){
-            $hIndex++;
-          }
-          if($row->citedby > 10){
-            $i10Index++;
-          }
-          $citation= $citation + $row->citedby;
-        }else{
-          $data[$i][0] = $nama;
-          $data[$i][1] = $citation;
-          $data[$i][2] = $hIndex;
-          $data[$i][3] = $i10Index;
-          $data[$i][4] = $counter;
-
-          $i++;
-          $citation = 0;
-          $hIndex = 0;
-          $i10Index = 0;
-          $counter = $row->url;
-          $nama = $row->nama;
-          $citation= $citation + $row->citedby;
-          if($row->citedby > $hIndex){
-            $hIndex++;
-          }
-          if($row->citedby >= 10){
-            $i10Index++;
-          }
-        }
-      }
-
-      $summary = array(
-        'meanCitation' => $view->avg('citation'),
-        'maxCitation' => $view->max('citation'),
-        'minCitation' => $view->min('citation')
-      );
-
-
-
-      echo $data[0][0];
-      return view('paper', compact(['summary', 'data']));
-    }
-
     public function getStudent(){
       $view = Activity::where('group', 0)->get();
       $view = Activity::join(

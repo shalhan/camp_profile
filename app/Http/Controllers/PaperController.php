@@ -184,4 +184,159 @@ class PaperController extends Controller
     //   }
     // }
   }
+
+  public function getPaperSummary(){
+    $query = Paper::select('nama', 'citedby', 'url')
+      ->join('lectures', 'papers.id_dosen', '=', 'lectures.url');
+
+    $view = $query->get();
+
+    $counter = $query->first()->url;
+    $citation = 0;
+    $hIndex = 0;
+    $i10Index = 0;
+    $i = 0;
+
+    $data=array();
+
+    foreach($view as $row){
+      if($counter == $row->url){
+        $nama = $row->nama;
+        if($row->citedby > $hIndex){
+          $hIndex++;
+        }
+        if($row->citedby > 10){
+          $i10Index++;
+        }
+        $citation= $citation + $row->citedby;
+      }else{
+        $data[$i][0] = $nama;
+        $data[$i][1] = $citation;
+        $data[$i][2] = $hIndex;
+        $data[$i][3] = $i10Index;
+        $data[$i][4] = $counter;
+
+        $i++;
+        $citation = 0;
+        $hIndex = 0;
+        $i10Index = 0;
+        $counter = $row->url;
+        $nama = $row->nama;
+        $citation= $citation + $row->citedby;
+        if($row->citedby > $hIndex){
+          $hIndex++;
+        }
+        if($row->citedby >= 10){
+          $i10Index++;
+        }
+      }
+    }
+
+    $summary = array(
+      'meanCitation' => $view->avg('citation'),
+      'maxCitation' => $view->max('citation'),
+      'minCitation' => $view->min('citation')
+    );
+
+    $size = count($data);
+    $citation = 0;
+    $hindex = 0;
+    $i10index = 0;
+    $minCitation = $data[0][1];
+    $maxCitation = $data[0][1];
+    $minHindex = $data[0][2];
+    $maxHindex = $data[0][2];
+    $minI10index = $data[0][3];
+    $maxI10index = $data[0][3];
+    $medianCitation = array();
+    $medianHindex = array();
+    $medianI10index= array();
+    $stdevCitation = array();
+    $stdevHindex = array();
+    $stdevI10index= array();
+
+    for($i=0; $i<$size; $i++){
+      $citation += $data[$i][1];
+      $hindex += $data[$i][2];
+      $i10index += $data[$i][3];
+      array_push($medianCitation, $data[$i][1]);
+      array_push($medianHindex, $data[$i][2]);
+      array_push($medianI10index, $data[$i][3]);
+
+      array_push($stdevCitation, $data[$i][1]);
+      array_push($stdevHindex, $data[$i][2]);
+      array_push($stdevI10index, $data[$i][3]);
+
+      if($minCitation > $data[$i][1]){
+        $minCitation = $data[$i][1];
+      }
+      if($maxCitation < $data[$i][1]){
+        $maxCitation = $data[$i][1];
+      }
+
+      if($minHindex > $data[$i][2]){
+        $minHindex = $data[$i][2];
+      }
+      if($maxHindex < $data[$i][2]){
+        $maxHindex = $data[$i][2];
+      }
+
+      if($minI10index > $data[$i][3]){
+        $minI10index = $data[$i][3];
+      }
+      if($maxI10index < $data[$i][3]){
+        $maxI10index = $data[$i][3];
+      }
+    }
+
+    $citation /= $size;
+    $hindex /= $size;
+    $i10index /= $size;
+
+    sort($medianCitation);
+
+
+    $summary = array(
+      'meanCitation' => $citation,
+      'meanHindex' => $hindex,
+      'meani10Index' => $i10index,
+      'minCitation' => $minCitation,
+      'minHindex' => $minHindex,
+      'minI10index' => $minI10index,
+      'maxCitation' => $maxCitation,
+      'maxHindex' => $maxHindex,
+      'maxI10index' => $maxI10index,
+      'medianCitation' => $this->median($medianCitation),
+      'medianHindex' => $this->median($medianHindex),
+      'medianI10index' => $this->median($medianI10index),
+      'stdevCitation' => $this->stdev($stdevCitation, $citation),
+      'stdevHindex' => $this->stdev($stdevHindex, $hindex),
+      'stdevI10index' => $this->stdev($stdevI10index, $i10index)
+    );
+    return view('paper', compact(['summary','data']));
+  }
+
+  protected function median($arr){
+    $count = count($arr);
+    $middleval = floor(($count-1)/2); // find the middle value, or the lowest middle value
+    if($count % 2) { // odd number, middle is the median
+       $median = $arr[$middleval];
+    } else { // even number, calculate avg of 2 medians
+       $low = $arr[$middleval];
+       $high = $arr[$middleval+1];
+       $median = (($low+$high)/2);
+    }
+
+    return $median;
+  }
+
+  protected function stdev($arr, $mean){
+    $count = count($arr);
+    $stdev = 0;
+    for($i=0; $i<$count; $i++){
+      $stdev += ($arr[$i] - $mean) * ($arr[$i] - $mean);
+    }
+
+    return sqrt($stdev/($count-1));
+  }
 }

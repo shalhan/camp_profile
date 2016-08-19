@@ -32,15 +32,16 @@
           </tr>
           </thead>
           <tbody>
-          
+
+          @foreach($data as $row)
           <tr>
-            <td>{{$nama}}</td>
-            <td>{{$citation}}</td>
-            <td></td>
-            <td></td>
+            <td>{{$row[0]}}</td>
+            <td>{{$row[1]}}</td>
+            <td>{{$row[2]}}</td>
+            <td>{{$row[3]}}</td>
             <td></td>
           </tr>
-
+          @endforeach
         </tbody>
       </table>
     </div>
@@ -66,33 +67,33 @@
 
           <tr>
             <td>Mean</td>
-            <td>{{number_format($summary['meanCitation'],2)}}</td>
-            <td></td>
-            <td></td>
+            <td>{{number_format($summary['meanCitation'], 2)}}</td>
+            <td>{{number_format($summary['meanHindex'],2)}}</td>
+            <td>{{number_format($summary['meani10Index'],2)}}</td>
           </tr>
           <tr>
             <td>Median</td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>{{number_format($summary['medianCitation'], 2)}}</td>
+            <td>{{number_format($summary['medianHindex'], 2)}}</td>
+            <td>{{number_format($summary['medianI10index'], 2)}}</td>
           </tr>
           <tr>
             <td>Min</td>
             <td>{{$summary['minCitation']}}</td>
-            <td></td>
-            <td></td>
+            <td>{{$summary['minHindex']}}</td>
+            <td>{{$summary['minI10index']}}</td>
           </tr>
           <tr>
             <td>Max</td>
             <td>{{$summary['maxCitation']}}</td>
-            <td></td>
-            <td></td>
+            <td>{{$summary['maxHindex']}}</td>
+            <td>{{$summary['maxI10index']}}</td>
           </tr>
           <tr>
             <td>STDEV</td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>{{number_format($summary['stdevCitation'], 2)}}</td>
+            <td>{{number_format($summary['stdevHindex'], 2)}}</td>
+            <td>{{number_format($summary['stdevI10index'], 2)}}</td>
           </tr>
 
         </tbody>
