@@ -13,6 +13,7 @@ use App\Category;
 use App\Cakupan;
 use Validator;
 use Image;
+use Excel;
 
 use App\Http\Requests;
 
@@ -209,5 +210,31 @@ class ActivityController extends Controller
     $file = File::where('id_files', $id)->first();
 
     return response()->download(storage_path() . '/app/uploads/' . $people . '/' . $file->path);
+  }
+
+  public function exportActivity(){
+    if(Session::has('lectureId')){
+      $people = Session::get('lectureId');
+    }else{
+      $people = Session::get('studentNim');
+    }
+
+    $data = Activity::join('category',
+    'activities.category','=','category.id_category')
+    ->join('cakupan', 'activities.cakupan','=','cakupan.id_cakupan')
+    ->select(['nama_kegiatan', 'nama', 'nama_cat', 'tgl_mulai', 'tgl_selesai', 'sumber_dana', 'pencapaian', 'deskripsi'])
+    ->where('id_people', $people)
+    ->get();
+    $date = Date('Ymd');
+
+    // echo "halo";
+    Excel::create('activity_' . $date, function($excel) use($data){
+    //     // Our first sheet
+      $excel->sheet('First sheet', function($sheet) use($data) {
+        $sheet->fromArray($data);
+      });
+    })->export('xls');
+
+    return redirect()->back();
   }
 }

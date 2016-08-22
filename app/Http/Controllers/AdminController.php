@@ -9,6 +9,7 @@ use App\Cakupan;
 use App\Paper;
 use App\File;
 use DB;
+use Excel;
 
 use App\Http\Requests;
 
@@ -19,7 +20,7 @@ class AdminController extends Controller
         'lectures',
         'lectures.url', '=',
         'papers.id_dosen'
-      )->get();
+      )->distinct()->get();
 
       return view('admin.dashboard', compact('view'));
     }
@@ -97,4 +98,36 @@ class AdminController extends Controller
 
       return redirect('setting');
     }
+
+    public function exportStudentActivity(){
+      $data = Activity::join('category',
+      'activities.category','=','category.id_category')
+      ->join('cakupan', 'activities.cakupan','=','cakupan.id_cakupan')
+      ->join('students', 'students.nim', '=', 'activities.id_people')
+      ->select(['nama_kegiatan', 'nama', 'nama_cat', 'tgl_mulai', 'tgl_selesai', 'sumber_dana', 'pencapaian', 'deskripsi'])
+      ->where('group', 0)
+      ->get();
+      $date = Date('Ymd');
+
+      // echo "halo";
+      Excel::create('student_activity_' . $date, function($excel) use($data){
+      //     // Our first sheet
+        $excel->sheet('First sheet', function($sheet) use($data) {
+          $sheet->fromArray($data);
+        });
+      })->export('xls');
+
+      return redirect()->back();
+    }
+    }
+
+    // public function exportPaperSummary(){
+    //   $data = Paper:
+    //   Excel::create('Paper Summary', function($excel) {
+    //     // Our first sheet
+    //     $excel->sheet('First sheet', function($sheet) {
+    //       $sheet->loadView('admin.');
+    //     });
+    //   })->export('xls');
+    // }
 }

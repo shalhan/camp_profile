@@ -39,7 +39,7 @@
             <td>{{$row[1]}}</td>
             <td>{{$row[2]}}</td>
             <td>{{$row[3]}}</td>
-            <td></td>
+            <td><a href="https://scholar.google.co.id/citations?user=" . {{$row[3]}} target="_blank">View</a></td>
           </tr>
           @endforeach
         </tbody>
@@ -51,9 +51,14 @@
     <div class="box">
       <div class="box-header">
         <h3 class="box-title">Summary</h3>
+        <div class="box-tools pull-right">
+          <a href="{{ route('export-paper-summary') }}"><p>EXPORT</p></a>
+        </div>
       </div>
       <!-- /.box-header -->
       <div class="box-body">
+
+
         <table id="example1" class="table table-bordered table-hover">
           <thead>
           <tr>

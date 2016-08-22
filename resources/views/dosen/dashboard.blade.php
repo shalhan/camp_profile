@@ -15,27 +15,7 @@
 @section('content')
 
 <div class="row">
-  <div class="col-md-6">
-    <!-- BAR CHART -->
-    <div class="box box-success">
-      <div class="box-header with-border">
-        <h3 class="box-title">Bar Chart</h3>
-
-        <div class="box-tools pull-right">
-          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-          </button>
-          <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-        </div>
-      </div>
-      <div class="box-body">
-        <div class="chart">
-          <canvas id="barChart" style="height:230px"></canvas>
-        </div>
-      </div>
-      <!-- /.box-body -->
-    </div>
-  </div>
-  <div class="col-lg-3 col-xs-6">
+  <div class="col-md-3">
     <!-- small box citation -->
     <div class="small-box bg-green">
       <div class="hidden">
@@ -63,6 +43,8 @@
         <i class="ion ion-stats-bars"></i>
       </div>
     </div>
+  </div>
+    <div class="col-md-3">
     <!-- small box hindex-->
     <div class="small-box bg-yellow">
       <div class="inner">
@@ -75,7 +57,8 @@
     </div>
   </div>
 
-  <div class="col-lg-3 col-xs-6">
+
+  <div class="col-md-3">
     <!-- small box total-->
     <div class="small-box bg-red">
       <div class="inner">
@@ -86,6 +69,8 @@
         <i class="ion ion-pie-graph"></i>
       </div>
     </div>
+  </div>
+    <div class="col-md-3">
     <!-- small box total-->
     <div class="small-box bg-aqua">
       <div class="inner">
@@ -93,7 +78,7 @@
         <p>Total Paper</p>
       </div>
       <div class="icon">
-        <i class="ion ion-bag"></i>
+        <i class="ion ion-document-text"></i>
       </div>
     </div>
   </div>

@@ -21,6 +21,9 @@
         <div class="fetching">
           <a href="" data-toggle="modal" data-target=".modal"><i class="fa fa-repeat"></i> Fetching Paper</a>
         </div>
+        <div class="box-tools pull-right">
+          <a href="{{ route('export-paper') }}"><p>EXPORT</p></a>
+        </div>
       </div>
       <!-- /.box-header -->
       <div class="box-body">

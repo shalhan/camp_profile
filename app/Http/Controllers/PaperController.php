@@ -9,12 +9,15 @@ use App\Http\Requests;
 use App\Paper;
 use App\Lecture;
 use Session;
+use Excel;
 
 class PaperController extends Controller
 {
   private $PAPER_DATA = array();
   private $NAME;
   private $counter;
+  private $report = array();
+  private $arr;
 
 
   protected function regexForm($s){
@@ -232,12 +235,6 @@ class PaperController extends Controller
       }
     }
 
-    $summary = array(
-      'meanCitation' => $view->avg('citation'),
-      'maxCitation' => $view->max('citation'),
-      'minCitation' => $view->min('citation')
-    );
-
     $size = count($data);
     $citation = 0;
     $hindex = 0;
@@ -289,6 +286,7 @@ class PaperController extends Controller
       }
     }
 
+    
     $citation /= $size;
     $hindex /= $size;
     $i10index /= $size;
@@ -313,8 +311,44 @@ class PaperController extends Controller
       'stdevHindex' => $this->stdev($stdevHindex, $hindex),
       'stdevI10index' => $this->stdev($stdevI10index, $i10index)
     );
+
     return view('paper', compact(['summary','data']));
   }
+
+  public function exportPaper(){
+    $data = Paper::join('lectures', 'lectures.url', '=', 'papers.id_dosen')
+      ->select(['nama', 'judul', 'author', 'jurnal', 'citedby', 'year'])
+      ->get();
+    $date = Date('Ymd');
+
+    // echo "halo";
+    Excel::create('All_paper_' . $date, function($excel) use($data){
+    //     // Our first sheet
+      $excel->sheet('First sheet', function($sheet) use($data) {
+        $sheet->fromArray($data);
+      });
+    })->export('xls');
+
+    return redirect()->back();
+
+  }
+
+  public function exportPaperSummary(){
+
+    print_r($this->report);
+    // $date = Date('Ymd');
+    // // echo "halo";
+    // Excel::create('Paper_summary_' . $date , function($excel) use($data){
+    // //     // Our first sheet
+    //   $excel->sheet('First sheet', function($sheet) use($data) {
+    //     $sheet->fromArray($data);
+    //   });
+    // })->export('xls');
+    //
+    // return redirect()->back();
+
+  }
+
 
   protected function median($arr){
     $count = count($arr);
@@ -339,4 +373,6 @@ class PaperController extends Controller
 
     return sqrt($stdev/($count-1));
   }
+
+
 }

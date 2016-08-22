@@ -41,6 +41,7 @@ Route::group(['middleware' => 'lecture'], function(){
     'uses' => 'UserController@logout',
     'as' => 'endsession'
   ]);
+
 });
 
 Route::group(['middleware' => 'admin'], function(){
@@ -61,6 +62,8 @@ Route::group(['middleware' => 'admin'], function(){
     'uses' => 'UserController@logout',
     'as' => 'signout'
   ]);
+  Route::get('export-paper', ['uses'=>'PaperController@exportPaper', 'as'=>'export-paper']);
+  Route::get('export-paper-summary', ['uses'=>'PaperController@exportPaperSummary', 'as'=>'export-paper-summary']);
 });
 
 //Student
@@ -72,6 +75,7 @@ Route::group(['middleware' => 'student'], function(){
   Route::get('student-activity-details/delete-file/{id}', 'ActivityController@deleteFile');
   Route::get('student-activity-details/download/{id}', 'ActivityController@downloadFile');
   Route::get('student-activity-add', 'ActivityController@getAddActivity');
+  Route::get('student-activity-export', ['uses'=>'ActivityController@exportActivity', 'as'=>'student-activity-export']);
   Route::get('logout', [
     'uses' => 'UserController@logout',
     'as' => 'logout'
