@@ -117,9 +117,12 @@ class AdminController extends Controller
       //     // Our first sheet
         $excel->sheet('First sheet', function($sheet) use($data) {
           $sheet->fromArray($data);
+          $sheet->row(1, array(
+            'Nama Kegiatan', 'Cakupan', 'Kategori', 'Mulai', 'Berakhir', 'Sumber Dana', 'Pencapaian', 'Deskripsi'
+          ));
         });
       })->export('xls');
-      } 
+      }
       return redirect()->back();
     }
 
@@ -141,6 +144,9 @@ class AdminController extends Controller
         //     // Our first sheet
           $excel->sheet('First sheet', function($sheet) use($data) {
             $sheet->fromArray($data);
+            $sheet->row(1, array(
+              'Nama Kegiatan', 'Cakupan', 'Kategori', 'Mulai', 'Berakhir', 'Sumber Dana', 'Pencapaian', 'Deskripsi'
+            ));
           });
         })->export('xls');
       }

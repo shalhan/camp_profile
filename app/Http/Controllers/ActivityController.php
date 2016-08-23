@@ -31,21 +31,6 @@ class ActivityController extends Controller
   }
 
   public function insertActivity(Request $request){
-    $user = array(
-      'activity' => $request -> input('activity'),
-      'category' => $request -> input('category'),
-      'cakupan' => $request -> input('cakupan'),
-      'description' => $request -> input('description'),
-
-    );
-
-    $validator = Validator::make($user, [
-         'activity' => 'required|max:50',
-         'category' => 'required',
-         'cakupan' => 'required',
-         'description' => 'max:180',
-     ]);
-
      if(Session::has('lectureId')){
        $path = 'activity-add';
        $path2 = 'activity';
@@ -58,10 +43,9 @@ class ActivityController extends Controller
        $group = 0;
      }
 
-     if($validator->fails()){
-       return redirect($path)
-                       ->withErrors($validator)
-                       ->withInput();
+     if(empty($request->input('activity'))){
+       Session::flash('empty_activity', 'Nama kegiatan masih kosong');
+       return redirect()->back();
      }else{
        $activity = $request -> input('activity');
        $category = $request -> input('category');
@@ -131,6 +115,7 @@ class ActivityController extends Controller
   }
 
   public function deleteDetail($id){
+
     $view = Activity::join('files', 'activities.id_activities', '=', 'files.id_activities')->get();
 
     if(Session::has('lectureId')){
@@ -158,6 +143,7 @@ class ActivityController extends Controller
     }
 
     $file = $request -> file('fileActivities');
+
 
     if(!empty($file)){
       $path = '/uploads' . '/' . $people . '/' . date("Ymd");
@@ -236,6 +222,9 @@ class ActivityController extends Controller
     //     // Our first sheet
       $excel->sheet('First sheet', function($sheet) use($data) {
         $sheet->fromArray($data);
+        $sheet->row(1, array(
+          'Nama Kegiatan', 'Cakupan', 'Kategori', 'Mulai', 'Berakhir', 'Sumber Dana', 'Pencapaian', 'Deskripsi'
+        ));
       });
     })->export('xls');
   }

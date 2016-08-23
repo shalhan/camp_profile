@@ -14,8 +14,13 @@
 
 @section('content')
 <div class="row">
-<div class="col-md-8 col-md-offset-2">
+<div class="col-md-10 col-md-offset-1">
   <!-- general form elements -->
+  @if(Session::has('empty_activity'))
+  <div class="callout callout-danger">
+      <p>{{Session::get('empty_activity')}}</p>
+    </div>
+  @endif
   <div class="box box-primary">
     <!-- /.box-header -->
     @if (count($errors) > 0)

@@ -47,7 +47,8 @@ class UserController extends Controller
         Session::put('admin',$request->username);
         return redirect('admin-dashboard');
       }else{
-        echo "fail";
+        Session::flash('error_login', 'Password atau username anda salah');
+        return redirect()->back();
       }
     }else{
       if(empty($hasil->nim)){

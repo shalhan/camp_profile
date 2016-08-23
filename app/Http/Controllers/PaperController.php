@@ -235,6 +235,8 @@ class PaperController extends Controller
       }
     }
 
+    $this->report = $data;
+
     $size = count($data);
     $citation = 0;
     $hindex = 0;
@@ -286,7 +288,7 @@ class PaperController extends Controller
       }
     }
 
-    
+
     $citation /= $size;
     $hindex /= $size;
     $i10index /= $size;

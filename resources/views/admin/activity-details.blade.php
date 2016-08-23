@@ -46,7 +46,7 @@
 
              <td>{{$row->file}}</td>
              <td></td>
-             <td><a href="{{ url('student-activity-details/delete-file/'. $row->id_files) }}" ><i class="fa fa-trash"></i></a></td>
+             <!-- <td><a href="{{ url('student-activity-details/delete-file/'. $row->id_files) }}" ><i class="fa fa-trash"></i></a></td> -->
            </tr>
            @endforeach
        </tbody>

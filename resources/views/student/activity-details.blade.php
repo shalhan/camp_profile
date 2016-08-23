@@ -16,6 +16,26 @@
 <div class="row">
   <div class="col-md-8">
 
+        <div class="modal delete_warning">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Warning</h4>
+              </div>
+              <div class="modal-body">
+                <p>Apakah anda yakin ingin menghapus ini?</p>
+              </div>
+              <div class="modal-footer">
+                <button  type="button" class="btn btn-primary"><a href="{{url('student-activity-details/delete/' . $view->id_activities) }}" style="color: inherit;">Delete</a></button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
 
         <div class="modal">
           <div class="modal-dialog">
@@ -97,7 +117,7 @@
       <div class="box-header with-border">
         <h3 class="box-title">{{ ucwords($view->nama_kegiatan) }}</h3>
         <div class="box-tools pull-right">
-          <a href="{{ url('student-activity-details/delete/' . $view->id_activities) }}"><p class="delete">DELETE</p></a>
+          <a href="" data-toggle="modal" data-target=".delete_warning"><p class="delete">DELETE</p></a>
 
         </div>
       </div>

@@ -15,20 +15,15 @@
 @section('content')
 <div class="row">
   <div class="col-md-10 col-md-offset-1">
+    @if(Session::has('empty_activity'))
+    <div class="callout callout-danger">
+        <p>{{Session::get('empty_activity')}}</p>
+      </div>
+    @endif
     <!-- general form elements -->
     <div class="box box-primary">
       <!-- /.box-header -->
       <!-- form start -->
-      @if (count($errors) > 0)
-      <div class="alert alert-danger">
-          <ul>
-              @foreach ($errors->all() as $error)
-                  <li>{{ $error }}</li>
-
-              @endforeach
-          </ul>
-      </div>
-      @endif
       <form action="{{ route('insertActivity') }}" role="form" method="post">
         {{ csrf_field() }}
         <div class="box-body">
