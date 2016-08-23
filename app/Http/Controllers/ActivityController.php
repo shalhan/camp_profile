@@ -219,6 +219,7 @@ class ActivityController extends Controller
       $people = Session::get('studentNim');
     }
 
+
     $data = Activity::join('category',
     'activities.category','=','category.id_category')
     ->join('cakupan', 'activities.cakupan','=','cakupan.id_cakupan')
@@ -228,13 +229,16 @@ class ActivityController extends Controller
     $date = Date('Ymd');
 
     // echo "halo";
+    if($data->count() == 0){
+      Session::flash('empty_table', 'Anda tidak memiliki data yang bisa di export');
+    }else{
     Excel::create('activity_' . $date, function($excel) use($data){
     //     // Our first sheet
       $excel->sheet('First sheet', function($sheet) use($data) {
         $sheet->fromArray($data);
       });
     })->export('xls');
-
+  }
     return redirect()->back();
   }
 }

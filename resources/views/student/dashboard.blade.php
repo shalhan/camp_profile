@@ -14,13 +14,19 @@
 
 @section('content')
 <div class="row">
+  @if(Session::has('empty_table'))
+  <div class="callout callout-warning">
+      <h4>Warning!</h4>
+      <p>{{Session::get('empty_table')}}</p>
+    </div>
+  @endif
   <div class="col-xs-12">
       <div class="box">
         <!-- /.box-header -->
         <form method="post">
           <div class="box-body">
             <div class="box-header">
-              <div class="box-box-tools pull-right">
+              <div class="box-tools pull-right">
                 <a href="{{ route('student-activity-export')}}"><p>EXPORT</p></a>
               </div>
             </div>

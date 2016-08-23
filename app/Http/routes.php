@@ -64,6 +64,8 @@ Route::group(['middleware' => 'admin'], function(){
   ]);
   Route::get('export-paper', ['uses'=>'PaperController@exportPaper', 'as'=>'export-paper']);
   Route::get('export-paper-summary', ['uses'=>'PaperController@exportPaperSummary', 'as'=>'export-paper-summary']);
+  Route::get('export-all-student-activity', ['uses'=>'AdminController@exportStudentActivity', 'as'=>'export-all-student-activity']);
+  Route::get('export-all-lecture-activity', ['uses'=>'AdminController@exportLectureActivity', 'as'=>'export-all-lecture-activity']);
 });
 
 //Student

@@ -10,7 +10,7 @@ use App\Paper;
 use App\File;
 use DB;
 use Excel;
-
+use Session;
 use App\Http\Requests;
 
 class AdminController extends Controller
@@ -104,21 +104,48 @@ class AdminController extends Controller
       'activities.category','=','category.id_category')
       ->join('cakupan', 'activities.cakupan','=','cakupan.id_cakupan')
       ->join('students', 'students.nim', '=', 'activities.id_people')
-      ->select(['nama_kegiatan', 'nama', 'nama_cat', 'tgl_mulai', 'tgl_selesai', 'sumber_dana', 'pencapaian', 'deskripsi'])
+      ->select(['nama_kegiatan', 'cakupan.nama', 'nama_cat', 'tgl_mulai', 'tgl_selesai', 'sumber_dana', 'pencapaian', 'deskripsi'])
       ->where('group', 0)
       ->get();
       $date = Date('Ymd');
 
       // echo "halo";
+      if($data->count() == 0){
+        Session::flash('empty_table', 'Anda tidak memiliki data yang bisa di export');
+      }else{
       Excel::create('student_activity_' . $date, function($excel) use($data){
       //     // Our first sheet
         $excel->sheet('First sheet', function($sheet) use($data) {
           $sheet->fromArray($data);
         });
       })->export('xls');
-
+      } 
       return redirect()->back();
     }
+
+    public function exportLectureActivity(){
+      $data = Activity::join('category',
+      'activities.category','=','category.id_category')
+      ->join('cakupan', 'activities.cakupan','=','cakupan.id_cakupan')
+      ->join('lectures', 'lectures.username', '=', 'activities.id_people')
+      ->select(['nama_kegiatan', 'cakupan.nama', 'nama_cat', 'tgl_mulai', 'tgl_selesai', 'sumber_dana', 'pencapaian', 'deskripsi'])
+      ->where('group', 1)
+      ->get();
+      $date = Date('Ymd');
+
+      // print_r($data);
+      if($data->count() == 0){
+        Session::flash('empty_table', 'Anda tidak memiliki data yang bisa di export');
+      }else{
+        Excel::create('lecture_activity_' . $date, function($excel) use($data){
+        //     // Our first sheet
+          $excel->sheet('First sheet', function($sheet) use($data) {
+            $sheet->fromArray($data);
+          });
+        })->export('xls');
+      }
+
+      return redirect()->back();
     }
 
     // public function exportPaperSummary(){

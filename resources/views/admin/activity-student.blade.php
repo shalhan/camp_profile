@@ -15,10 +15,19 @@
 
 @section('content')
 <div class="row">
+  @if(Session::has('empty_table'))
+  <div class="callout callout-warning">
+      <h4>Warning!</h4>
+      <p>{{Session::get('empty_table')}}</p>
+    </div>
+  @endif
   <div class="col-xs-12">
       <div class="box">
         <div class="box-header">
           <h3 class="box-title">All student</h3>
+          <div class="box-tools pull-right">
+            <a href="{{ route('export-all-student-activity')}}"><p>EXPORT</p></a>
+          </div>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
