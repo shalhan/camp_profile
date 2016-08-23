@@ -85,16 +85,16 @@
           <li class="header">MAIN NAVIGATION</li>
           <!-- Optionally, you can add icons to the links -->
           @if(Session::has('studentName'))
-          <li class="active"><a href="{{ url('student-dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-          @elseif (Session::has('lectureId'))
-          <li class="active"><a href="{{ url('dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-          <li class="active"><a href="{{ url('activity') }}"><i class="fa fa-table"></i> <span>Activity</span></a></li>
+          <li class="{{ set_active('student-dashboard') }}"><a href="{{ url('student-dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+          @elseif(Session::has('lectureId'))
+          <li class="{{ set_active('dashboard') }}"><a href="{{ url('dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+          <li class="{{ set_active('activity') }}"><a href="{{ url('activity') }}"><i class="fa fa-table"></i> <span>Activity</span></a></li>
           @else
-          <li class="active"><a href="{{ route('admin-dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-            <li><a href="{{ route('paper') }}"><i class="fa fa-file-text-o"></i> <span>Paper</span></a></li>
-          <li><a href="{{ route('activity-lecture') }}"><i class="fa fa-table"></i> <span>Lecture</span></a></li>
-          <li><a href="{{ route('activity-student') }}"><i class="fa fa-book"></i> <span>Student</span></a></li>
-          <li><a href="{{ route('setting') }}"><i class="fa fa-cog"></i> <span>Settings</span></a></li>
+          <li class="{{ set_active('admin-dashboard') }}"><a href="{{ route('admin-dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+          <li class="{{ set_active('paper') }}"><a href="{{ route('paper') }}"><i class="fa fa-file-text-o"></i> <span>Paper</span></a></li>
+          <li class="{{ set_active('activity-lecture') }}"><a href="{{ route('activity-lecture') }}"><i class="fa fa-table"></i> <span>Lecture</span></a></li>
+          <li class="{{ set_active('activity-student') }}"><a href="{{ route('activity-student') }}"><i class="fa fa-book"></i> <span>Student</span></a></li>
+          <li class="{{ set_active('setting') }}"><a href="{{ route('setting') }}"><i class="fa fa-cog"></i> <span>Settings</span></a></li>
           @endif
         </ul>
         <!-- /.sidebar-menu -->
