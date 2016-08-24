@@ -175,17 +175,6 @@ class PaperController extends Controller
               ->where('lectures.username', Session::get('lectureId'))->get();
 
     return view('dosen.dashboard', compact('view'));
-    // if(isset($url)){
-    //   $this->setPaper($url);
-    //   foreach($PAPER_DATA as $paper){
-    //    $table->judul = $paper[judul];
-    //    $table->author = $paper[author];
-    //    $table->jurnal = $paper[journal];
-    //    $table->citedby =  $paper[cited];
-    //    $table->year =  $paper[year];
-    //    $table->id_dosen = Session::get('lectureId');
-    //   }
-    // }
   }
 
   public function getPaperSummary(){
@@ -235,7 +224,11 @@ class PaperController extends Controller
       }
     }
 
-    $this->report = $data;
+    $data[$i][0] = $nama;
+    $data[$i][1] = $citation;
+    $data[$i][2] = $hIndex;
+    $data[$i][3] = $i10Index;
+    $data[$i][4] = $counter;
 
     $size = count($data);
     $citation = 0;
