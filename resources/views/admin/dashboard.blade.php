@@ -1,7 +1,7 @@
 @extends('master')
 
 @section('header-content')
-  Dashboard
+  Beranda
 @endsection
 
 @section('span-content')
@@ -9,7 +9,7 @@
 @endsection
 
 @section('breadcrumb')
-  Dashboard
+  Beranda
 @endsection
 
 @section('content')
@@ -41,7 +41,7 @@
           <tr>
             <td>{{$row->nama}}</td>
             <td>
-                <h4 class="paper_title">{{$row->judul}}</h4>
+                <h4 class="paper_title"><a href="http://scholar.google.co.id/{{$row->link}}">{{$row->judul}}</a></h4>
                 <p class="td_gray">{{$row->author}}</p>
                 <p class="td_gray">{{$row->jurnal}}</p>
             </td>

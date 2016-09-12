@@ -1,15 +1,15 @@
 @extends('master')
 
 @section('header-content')
-  Activity
+  Aktifitas
 @endsection
 
 @section('span-content')
-  Add
+
 @endsection
 
 @section('breadcrumb')
-  Activity
+  Aktifitas
 @endsection
 
 @section('content')
@@ -57,7 +57,7 @@
             <label>Cakupan</label>
             <select class="form-control select2" style="width: 100%;" name="cakupan">
               @foreach($viewCak as $row)
-              <option value="{{$row->id_cakupan}}">{{$row->nama}}</option>
+              <option value="{{$row->id_cakupan}}">{{$row->nama_cak}}</option>
               @endforeach
             </select>
           </div>

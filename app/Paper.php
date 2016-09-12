@@ -12,6 +12,7 @@ class Paper extends Model
     'jurnal',
     'citedby',
     'year',
-    'id_dosen'
+    'id_dosen',
+    'link'
   ];
 }

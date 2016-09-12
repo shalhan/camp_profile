@@ -35,7 +35,7 @@
     <p class="login-box-msg">Sign in to start your session</p>
 
     @if(Session::has('error_login'))
-    <div class="callout callout-danger">
+      <div class="callout callout-danger">
         <p>{{Session::get('error_login')}}</p>
       </div>
     @endif

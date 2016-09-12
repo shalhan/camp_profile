@@ -25,7 +25,6 @@
 
   <link rel="stylesheet" href="{{ asset("/bower_components/AdminLTE/dist/css/skins/skin-blue.min.css") }}">
 
-  <link rel="stylesheet" href="{{ asset("/bower_components/AdminLTE/dist/treeview/jqueryFileTree.css") }}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -85,16 +84,28 @@
           <li class="header">MAIN NAVIGATION</li>
           <!-- Optionally, you can add icons to the links -->
           @if(Session::has('studentName'))
-          <li class="{{ set_active('student-dashboard') }}"><a href="{{ url('student-dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+          <li class="{{ set_active('student-dashboard') }}"><a href="{{ route('student-dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
           @elseif(Session::has('lectureId'))
-          <li class="{{ set_active('dashboard') }}"><a href="{{ url('dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-          <li class="{{ set_active('activity') }}"><a href="{{ url('activity') }}"><i class="fa fa-table"></i> <span>Activity</span></a></li>
+          <li class="{{ set_active('dashboard') }}"><a href="{{ url('dashboard') }}"><i class="fa fa-dashboard"></i> <span>Beranda</span></a></li>
+          <li class="{{ set_active('activity') }}"><a href="{{ url('activity') }}"><i class="fa fa-table"></i> <span>Aktifitas</span></a></li>
           @else
-          <li class="{{ set_active('admin-dashboard') }}"><a href="{{ route('admin-dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+          <li class="{{ set_active('admin-dashboard') }}"><a href="{{ route('admin-dashboard') }}"><i class="fa fa-dashboard"></i> <span>Beranda</span></a></li>
           <li class="{{ set_active('paper') }}"><a href="{{ route('paper') }}"><i class="fa fa-file-text-o"></i> <span>Paper</span></a></li>
-          <li class="{{ set_active('activity-lecture') }}"><a href="{{ route('activity-lecture') }}"><i class="fa fa-table"></i> <span>Lecture</span></a></li>
-          <li class="{{ set_active('activity-student') }}"><a href="{{ route('activity-student') }}"><i class="fa fa-book"></i> <span>Student</span></a></li>
-          <li class="{{ set_active('setting') }}"><a href="{{ route('setting') }}"><i class="fa fa-cog"></i> <span>Settings</span></a></li>
+          <li class="treeview {{ set_active(['activity-lecture', 'activity-student']) }}">
+          <a href="#">
+            <i class="fa fa-share"></i> <span>Aktifitas</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu menu-open" style="display: block;">
+            <li class="{{ set_active('activity-lecture') }}"><a href="{{ route('activity-lecture') }}"><i class="fa fa-table"></i> <span>Dosen</span></a></li>
+            <li class="{{ set_active('activity-student') }}"><a href="{{ route('activity-student') }}"><i class="fa fa-book"></i> <span>Mahasiswa</span></a></li>
+          </ul>
+        </li>
+
+
+          <li class="{{ set_active('setting') }}"><a href="{{ route('setting') }}"><i class="fa fa-cog"></i> <span>Pengaturan</span></a></li>
           @endif
         </ul>
         <!-- /.sidebar-menu -->
@@ -151,13 +162,11 @@
 <!-- AdminLTE App -->
 <script src="{{ asset("/bower_components/AdminLTE/dist/js/app.min.js") }}"></script>
 
-<script src="{{ asset("/bower_components/AdminLTE/dist/treeview/jquery.easing.js") }}"></script>
-<script src="{{ asset("/bower_components/AdminLTE/dist/treeview/jqueryFileTree.js") }}"></script>
 
 
 <script>
 function changeCat(id){
-  document.getElementById("category" + id).innerHTML = '<div class="input-group input-group-sm"><input type="text" class="form-control" name="category" placeholder="input category.."><span class="input-group-btn"><button type="submit" class="btn btn-info btn-flat"><i class="fa fa-check"></i></button><button type="button" class="btn btn-info btn-danger"><i class="fa fa-times"></i></button></span></div>';
+  document.getElementById("category" + id).innerHTML = '<div class="input-group input-group-sm"><input type="text" class="form-control"  name="category"  placeholder="input category.."><span class="input-group-btn"><button type="submit" class="btn btn-info btn-flat"><i class="fa fa-check"></i></button><button type="button" class="btn btn-info btn-danger" onclick=cancel() ><i class="fa fa-times"></i></button></span></div>';
 }
 
 function changeCak(id){
@@ -181,75 +190,15 @@ function addCak(count){
     cell1.innerHTML = '<form action="{{route('add-cakupan')}}" method="post">{{csrf_field()}}<div class="input-group input-group-sm"><input type="text" class="form-control" name="newcakupan" placeholder="input new category.."><span class="input-group-btn"><button type="submit" class="btn btn-info btn-flat"><i class="fa fa-check"></i></button><button type="button" class="btn btn-info btn-danger"><i class="fa fa-times"></i></button></span></div></form>';
 }
 
+function cancel(){
+  location.reload();
+}
+
 
 </script>
 
 <script>
   $(".select2").select2();
-  //-------------
-  //- BAR CHART -
-  //-------------
-  var barChartCanvas = $("#barChart").get(0).getContext("2d");
-  var barChart = new Chart(barChartCanvas);
-  var areaChartData = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
-    datasets: [
-      {
-        label: "Electronics",
-        fillColor: "rgba(210, 214, 222, 1)",
-        strokeColor: "rgba(210, 214, 222, 1)",
-        pointColor: "rgba(210, 214, 222, 1)",
-        pointStrokeColor: "#c1c7d1",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(220,220,220,1)",
-        data: [65, 59, 80, 81, 56, 55, 40]
-      },
-      {
-        label: "Digital Goods",
-        fillColor: "rgba(60,141,188,0.9)",
-        strokeColor: "rgba(60,141,188,0.8)",
-        pointColor: "#3b8bba",
-        pointStrokeColor: "rgba(60,141,188,1)",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(60,141,188,1)",
-        data: [28, 48, 40, 19, 86, 27, 90]
-      }
-    ]
-  };
-  var barChartData = areaChartData;
-  barChartData.datasets[1].fillColor = "#00a65a";
-  barChartData.datasets[1].strokeColor = "#00a65a";
-  barChartData.datasets[1].pointColor = "#00a65a";
-  var barChartOptions = {
-    //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
-    scaleBeginAtZero: true,
-    //Boolean - Whether grid lines are shown across the chart
-    scaleShowGridLines: true,
-    //String - Colour of the grid lines
-    scaleGridLineColor: "rgba(0,0,0,.05)",
-    //Number - Width of the grid lines
-    scaleGridLineWidth: 1,
-    //Boolean - Whether to show horizontal lines (except X axis)
-    scaleShowHorizontalLines: true,
-    //Boolean - Whether to show vertical lines (except Y axis)
-    scaleShowVerticalLines: true,
-    //Boolean - If there is a stroke on each bar
-    barShowStroke: true,
-    //Number - Pixel width of the bar stroke
-    barStrokeWidth: 2,
-    //Number - Spacing between each of the X value sets
-    barValueSpacing: 5,
-    //Number - Spacing between data sets within X values
-    barDatasetSpacing: 1,
-    //String - A legend template
-    legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
-    //Boolean - whether to make the chart responsive
-    responsive: true,
-    maintainAspectRatio: true
-  };
-
-  barChartOptions.datasetFill = false;
-  barChart.Bar(barChartData, barChartOptions);
 </script>
 <script>
   $(function () {
@@ -280,6 +229,15 @@ jQuery(document).ready(function($) {
     });
 });
 </script>
+<!-- export spesific data -->
+<script>
+$(':radio').change(function (event) {
+    var id = $(this).data('id');
+    $('#' + id).addClass('none').siblings().removeClass('none');
+});
+</script>
+
+<!--close export modal-->
 
 
 

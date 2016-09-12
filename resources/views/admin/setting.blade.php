@@ -1,7 +1,7 @@
 @extends('master')
 
 @section('header-content')
-  Settings
+  Pengaturan
 @endsection
 
 @section('span-content')
@@ -9,7 +9,7 @@
 @endsection
 
 @section('breadcrumb')
-  Settings
+  Pengaturan
 @endsection
 
 @section('content')
@@ -25,7 +25,7 @@
           </div>
         </div>
         <!-- /.box-header -->
-        <div class="box-body no-padding">
+        <div class="box-body">
           <table id="category-table" class="table table-condensed">
             @foreach($view as $row)
 
@@ -67,7 +67,7 @@
         </div>
       </div>
       <!-- /.box-header -->
-      <div class="box-body no-padding">
+      <div class="box-body">
         <table id="cakupan-table" class="table table-condensed">
           @foreach($view2 as $row)
           <tr>
@@ -75,7 +75,7 @@
             <input type="hidden" value="{{$row->id_cakupan}}">
             <form action="{{ url('setting/update-cakupan/' . $row->id_cakupan)}}" method="post">
               {{csrf_field()}}
-              <td style="width:80%;" id="cakupan{{$row->id_cakupan}}">{{$row->nama}}</td>
+              <td style="width:80%;" id="cakupan{{$row->id_cakupan}}">{{$row->nama_cak}}</td>
             </form>
             <td class="setting">
               <a class="click" onclick="changeCak({{$row->id_cakupan}})">Edit</a>

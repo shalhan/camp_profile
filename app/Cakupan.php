@@ -8,6 +8,6 @@ class Cakupan extends Model
 {
   protected $table = 'cakupan';
   protected $fillable = [
-    'nama'
+    'nama_cak'
   ];
 }

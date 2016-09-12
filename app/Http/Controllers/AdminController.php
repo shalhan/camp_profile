@@ -26,8 +26,8 @@ class AdminController extends Controller
     }
 
     public function getStudent(){
-      $view = Activity::where('group', 0)->get();
-      $view = Activity::join(
+      $view = Activity::select(DB::raw('*, YEAR(`tgl_mulai`) AS year'))
+      ->join(
         'students',
         'students.nim', '=',
         'activities.id_people'
@@ -37,11 +37,14 @@ class AdminController extends Controller
     }
 
     public function getLecture(){
-      $view = Activity::join(
+      $view = Activity::select(DB::raw('*, YEAR(`tgl_mulai`) AS year'))
+      ->join(
         'lectures',
         'lectures.username', '=',
         'activities.id_people'
-      )->get();
+      )
+      ->get();
+
       return view('admin.activity-lecture', compact('view'));
     }
 
@@ -99,53 +102,122 @@ class AdminController extends Controller
       return redirect('setting');
     }
 
-    public function exportStudentActivity(){
-      $data = Activity::join('category',
-      'activities.category','=','category.id_category')
-      ->join('cakupan', 'activities.cakupan','=','cakupan.id_cakupan')
-      ->join('students', 'students.nim', '=', 'activities.id_people')
-      ->select(['nama_kegiatan', 'cakupan.nama', 'nama_cat', 'tgl_mulai', 'tgl_selesai', 'sumber_dana', 'pencapaian', 'deskripsi'])
-      ->where('group', 0)
-      ->get();
-      $date = Date('Ymd');
-
-      // echo "halo";
-      if($data->count() == 0){
-        Session::flash('empty_table', 'Anda tidak memiliki data yang bisa di export');
+    public function exportStudentActivity(Request $request){
+      $input = $request->input('export');
+      $nama = $request->input('nama');
+      $year = $request->input('year');
+      if($input == '0' || $nama == '0' && $year == '0'){
+        $data = Activity::join('category',
+          'activities.category','=','category.id_category')
+          ->join('cakupan', 'activities.cakupan','=','cakupan.id_cakupan')
+          ->join('students', 'students.nim', '=', 'activities.id_people')
+          ->select(['students.nama', 'nama_kegiatan', 'cakupan.nama_cak', 'nama_cat', 'tgl_mulai', 'tgl_selesai', 'sumber_dana', 'pencapaian', 'deskripsi'])
+          ->where('group', 0)
+          ->get();
+        $fileName = 'all';
       }else{
-      Excel::create('student_activity_' . $date, function($excel) use($data){
-      //     // Our first sheet
-        $excel->sheet('First sheet', function($sheet) use($data) {
-          $sheet->fromArray($data);
-          $sheet->row(1, array(
-            'Nama Kegiatan', 'Cakupan', 'Kategori', 'Mulai', 'Berakhir', 'Sumber Dana', 'Pencapaian', 'Deskripsi'
-          ));
-        });
-      })->export('xls');
+
+        if($nama == '0'){
+          $data = Activity::join('category',
+            'activities.category','=','category.id_category')
+            ->join('cakupan', 'activities.cakupan','=','cakupan.id_cakupan')
+            ->join('students', 'students.nim', '=', 'activities.id_people')
+            ->select(['students.nama', 'nama_kegiatan', 'cakupan.nama_cak', 'nama_cat', 'tgl_mulai', 'tgl_selesai', 'sumber_dana', 'pencapaian', 'deskripsi'])
+            ->whereRaw("`group` = 0 and YEAR(tgl_mulai) = '" . $year . "'")
+            ->get();
+          $fileName = $year;
+        }elseif($nama != '0' && $year == '0'){
+          $data = Activity::join('category',
+            'activities.category','=','category.id_category')
+            ->join('cakupan', 'activities.cakupan','=','cakupan.id_cakupan')
+            ->join('students', 'students.nim', '=', 'activities.id_people')
+            ->select(['students.nama', 'nama_kegiatan', 'cakupan.nama_cak', 'nama_cat', 'tgl_mulai', 'tgl_selesai', 'sumber_dana', 'pencapaian', 'deskripsi'])
+            ->whereRaw("`group` = 0 and id_people = '" . $nama . "'")
+            ->get();
+            $fileName = 'semua_tahun';
+        }else{
+          $data = Activity::join('category',
+            'activities.category','=','category.id_category')
+            ->join('cakupan', 'activities.cakupan','=','cakupan.id_cakupan')
+            ->join('students', 'students.nim', '=', 'activities.id_people')
+            ->select(['students.nama', 'nama_kegiatan', 'cakupan.nama_cak', 'nama_cat', 'tgl_mulai', 'tgl_selesai', 'sumber_dana', 'pencapaian', 'deskripsi'])
+            ->whereRaw("`group` = 0 and id_people = '" . $nama . "' and YEAR(tgl_mulai) = " . $year)
+            ->get();
+          $fileName = $year;
+        }
       }
-      return redirect()->back();
-    }
 
-    public function exportLectureActivity(){
-      $data = Activity::join('category',
-      'activities.category','=','category.id_category')
-      ->join('cakupan', 'activities.cakupan','=','cakupan.id_cakupan')
-      ->join('lectures', 'lectures.username', '=', 'activities.id_people')
-      ->select(['nama_kegiatan', 'cakupan.nama', 'nama_cat', 'tgl_mulai', 'tgl_selesai', 'sumber_dana', 'pencapaian', 'deskripsi'])
-      ->where('group', 1)
-      ->get();
-      $date = Date('Ymd');
-
-      // print_r($data);
       if($data->count() == 0){
         Session::flash('empty_table', 'Anda tidak memiliki data yang bisa di export');
       }else{
-        Excel::create('lecture_activity_' . $date, function($excel) use($data){
+        Excel::create('mahasiswa_activity_' .  $fileName, function($excel) use($data){
         //     // Our first sheet
           $excel->sheet('First sheet', function($sheet) use($data) {
             $sheet->fromArray($data);
             $sheet->row(1, array(
-              'Nama Kegiatan', 'Cakupan', 'Kategori', 'Mulai', 'Berakhir', 'Sumber Dana', 'Pencapaian', 'Deskripsi'
+              'Nama', 'Kegiatan', 'Cakupan', 'Kategori', 'Mulai', 'Berakhir', 'Sumber Dana', 'Pencapaian', 'Deskripsi'
+            ));
+          });
+        })->export('xls');
+      }
+
+      return redirect()->back();
+    }
+
+    public function exportLectureActivity(Request $request){
+      $input = $request->input('export');
+      $nama = $request->input('nama');
+      $year = $request->input('year');
+      if($input == '0' || $nama == '0' && $year == '0'){
+        $data = Activity::join('category',
+          'activities.category','=','category.id_category')
+          ->join('cakupan', 'activities.cakupan','=','cakupan.id_cakupan')
+          ->join('lectures', 'lectures.username', '=', 'activities.id_people')
+          ->select(['lectures.nama', 'nama_kegiatan', 'cakupan.nama_cak', 'nama_cat', 'tgl_mulai', 'tgl_selesai', 'sumber_dana', 'pencapaian', 'deskripsi'])
+          ->where('group', 1)
+          ->get();
+        $fileName = 'all';
+      }else{
+
+        if($nama == '0' && $year != '0'){
+          $data = Activity::join('category',
+            'activities.category','=','category.id_category')
+            ->join('cakupan', 'activities.cakupan','=','cakupan.id_cakupan')
+            ->join('lectures', 'lectures.username', '=', 'activities.id_people')
+            ->select(['lectures.nama', 'nama_kegiatan', 'cakupan.nama_cak', 'nama_cat', 'tgl_mulai', 'tgl_selesai', 'sumber_dana', 'pencapaian', 'deskripsi'])
+            ->whereRaw("`group` = 1 and YEAR(tgl_mulai) = '" . $year . "'")
+            ->get();
+          $fileName = $year;
+        }elseif($nama != '0' && $year == '0'){
+          $data = Activity::join('category',
+            'activities.category','=','category.id_category')
+            ->join('cakupan', 'activities.cakupan','=','cakupan.id_cakupan')
+            ->join('lectures', 'lectures.username', '=', 'activities.id_people')
+            ->select(['lectures.nama', 'nama_kegiatan', 'cakupan.nama_cak', 'nama_cat', 'tgl_mulai', 'tgl_selesai', 'sumber_dana', 'pencapaian', 'deskripsi'])
+            ->whereRaw("`group` = 1 and id_people = '" . $nama . "'")
+            ->get();
+            $fileName = 'semua_tahun';
+        }else{
+          $data = Activity::join('category',
+            'activities.category','=','category.id_category')
+            ->join('cakupan', 'activities.cakupan','=','cakupan.id_cakupan')
+            ->join('lectures', 'lectures.username', '=', 'activities.id_people')
+            ->select(['lectures.nama', 'nama_kegiatan', 'cakupan.nama_cak', 'nama_cat', 'tgl_mulai', 'tgl_selesai', 'sumber_dana', 'pencapaian', 'deskripsi'])
+            ->whereRaw("`group` = 1 and id_people = '" . $nama . "' and YEAR(tgl_mulai) = " . $year)
+            ->get();
+          $fileName = $year;
+        }
+      }
+
+      if($data->count() == 0){
+        Session::flash('empty_table', 'Anda tidak memiliki data yang bisa di export');
+      }else{
+        Excel::create('dosen_activity_' .  $fileName, function($excel) use($data){
+        //     // Our first sheet
+          $excel->sheet('First sheet', function($sheet) use($data) {
+            $sheet->fromArray($data);
+            $sheet->row(1, array(
+              'Nama', 'Kegiatan', 'Cakupan', 'Kategori', 'Mulai', 'Berakhir', 'Sumber Dana', 'Pencapaian', 'Deskripsi'
             ));
           });
         })->export('xls');

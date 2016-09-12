@@ -18,16 +18,22 @@
      <div class="box">
        <div class="box-header">
          <h3 class="box-title">File</h3>
+         <div class="box-tools pull-right">
+           <a href=""><p>Download All</p></a>
+         </div>
        </div>
        <!-- /.box-header -->
-       <div class="box-body no-padding">
-         <table class="table table-striped">
-           <tr>
-             <th></th>
-             <th>Nama</th>
-             <th></th>
-             <th style="width: 40px"></th>
-           </tr>
+       <div class="box-body">
+        <table id="example1" class="table table-bordered table-hover">
+          <thead>
+             <tr>
+               <th></th>
+               <th>Nama</th>
+               <th>Ukuran file</th>
+               <th style="width: 40px"></th>
+             </tr>
+           </thead>
+           <tbody>
            @foreach($file as $row)
            <tr>
              @if($row->ext == "csv")
@@ -45,7 +51,7 @@
              @endif
 
              <td>{{$row->file}}</td>
-             <td></td>
+             <td>{{number_format($row->size / 1000, 1)}} kB</td>
              <!-- <td><a href="{{ url('student-activity-details/delete-file/'. $row->id_files) }}" ><i class="fa fa-trash"></i></a></td> -->
            </tr>
            @endforeach
@@ -73,7 +79,7 @@
              <p class="cakupan">Cakupan &nbsp;</p>
            </div>
            <div class="col-sm-7">
-             <p>:&nbsp;{{ ucwords($view->nama) }}</p>
+             <p>:&nbsp;{{ ucwords($view->nama_cak) }}</p>
            </div>
            <div class="col-sm-5">
              <p class="cakupan">Mulai &nbsp;</p>

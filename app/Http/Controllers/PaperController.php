@@ -18,6 +18,7 @@ class PaperController extends Controller
   private $counter;
   private $report = array();
   private $arr;
+  private $a;
 
 
   protected function regexForm($s){
@@ -91,12 +92,16 @@ class PaperController extends Controller
           if(strpos($matches[0][1],"&nbsp") > 0){
             $matches[0][1] = "0";
           }
+
+          preg_match_all('/<a[^>]+href=([\'"])(.+?)\1[^>]*>/i', $paperJudul[0][0], $result);
+
           $detail = array(
               'judul' => preg_replace('#<a.*?>([^>]*)</a>#i', '$1', $paperJudul[0][0]),
               'author' => $paperAJ[1][0],
               'jurnal' => strip_tags($paperAJ[1][1]),
               'citedby' => strip_tags(str_replace("*","",$matches[0][1])),
-              'year' => strip_tags($matches[0][2])
+              'year' => strip_tags($matches[0][2]),
+              'link' => $result[2][0]
           );
           $this->PAPER_DATA[] = $detail;
           $this->counter = true;
@@ -154,7 +159,8 @@ class PaperController extends Controller
                 'jurnal' => $paper['jurnal'],
                 'citedby' => $paper['citedby'],
                 'year' => $paper['year'],
-                'id_dosen'=> $url
+                'id_dosen'=> $url,
+                'link' => $paper['link']
               ]
             );
           }
@@ -229,6 +235,10 @@ class PaperController extends Controller
     $data[$i][2] = $hIndex;
     $data[$i][3] = $i10Index;
     $data[$i][4] = $counter;
+
+    $this->report = $data;
+    $this->a = 5;
+    echo $this->a;
 
     $size = count($data);
     $citation = 0;
@@ -330,7 +340,8 @@ class PaperController extends Controller
 
   public function exportPaperSummary(){
 
-    print_r($this->report);
+    // print_r($this->report);
+    echo $this->a;
     // $date = Date('Ymd');
     // // echo "halo";
     // Excel::create('Paper_summary_' . $date , function($excel) use($data){

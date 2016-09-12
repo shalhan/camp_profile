@@ -30,6 +30,7 @@ Route::group(['middleware' => 'lecture'], function(){
   Route::get('activity-add', 'ActivityController@getAddActivity');
   Route::get('lec-activity-details/{id}', 'ActivityController@getDetail');
   Route::post('activity-details/upload/{id}', 'ActivityController@insertFile');
+  Route::post('activity-export', ['uses'=>'ActivityController@exportActivity', 'as'=>'activity-export']);
   Route::get('activity-details/delete/{id}', 'ActivityController@deleteDetail');
   Route::get('activity-details/delete-file/{id}', 'ActivityController@deleteFile');
   Route::get('activity-details/download/{id}', 'ActivityController@downloadFile');
@@ -64,20 +65,20 @@ Route::group(['middleware' => 'admin'], function(){
   ]);
   Route::get('export-paper', ['uses'=>'PaperController@exportPaper', 'as'=>'export-paper']);
   Route::get('export-paper-summary', ['uses'=>'PaperController@exportPaperSummary', 'as'=>'export-paper-summary']);
-  Route::get('export-all-student-activity', ['uses'=>'AdminController@exportStudentActivity', 'as'=>'export-all-student-activity']);
-  Route::get('export-all-lecture-activity', ['uses'=>'AdminController@exportLectureActivity', 'as'=>'export-all-lecture-activity']);
+  Route::post('export-all-student-activity', ['uses'=>'AdminController@exportStudentActivity', 'as'=>'export-all-student-activity']);
+  Route::post('export-all-lecture-activity', ['uses'=>'AdminController@exportLectureActivity', 'as'=>'export-all-lecture-activity']);
 });
 
 //Student
 Route::group(['middleware' => 'student'], function(){
-  Route::get('student-dashboard', 'ActivityController@getActivity');
+  Route::get('student-dashboard', ['uses'=>'ActivityController@getActivity', 'as'=>'student-dashboard']);
   Route::get('student-activity-details/{id}', 'ActivityController@getDetail');
   Route::post('student-activity-details/upload/{id}', 'ActivityController@insertFile');
   Route::get('student-activity-details/delete/{id}', 'ActivityController@deleteDetail');
   Route::get('student-activity-details/delete-file/{id}', 'ActivityController@deleteFile');
   Route::get('student-activity-details/download/{id}', 'ActivityController@downloadFile');
   Route::get('student-activity-add', 'ActivityController@getAddActivity');
-  Route::get('student-activity-export', ['uses'=>'ActivityController@exportActivity', 'as'=>'student-activity-export']);
+  Route::post('student-activity-export', ['uses'=>'ActivityController@exportActivity', 'as'=>'student-activity-export']);
   Route::get('logout', [
     'uses' => 'UserController@logout',
     'as' => 'logout'

@@ -30,7 +30,7 @@ class UserController extends Controller
     );
     $data_string = json_encode($data);
 
-    $ch = curl_init('');
+    $ch = curl_init('http://agricode.cs.ipb.ac.id/ivan/login.php');
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -43,9 +43,17 @@ class UserController extends Controller
     $hasil = json_decode($result);
 
     if(empty($hasil)){
-      if(Admin::where(['username' => $request->username, 'password' => $request->password])->first() != null){
-        Session::put('admin',$request->username);
-        return redirect('admin-dashboard');
+      $login = Admin::where(['username' => $request->username, 'password' => $request->password])->first();
+      if($login != null){
+        if($login->status == 0){
+            Session::put('admin',$request->username);
+            return redirect('admin-dashboard');
+
+        }else{
+          $user = Admin::join('lectures', 'lectures.username', '=', 'admins.username')->where('lectures.username', $username)->first();
+          Session::put(['lectureId' => $username, 'lectureName' => $user->nama]);
+          return redirect('dashboard');
+        }
       }else{
         Session::flash('error_login', 'Password atau username anda salah');
         return redirect()->back();

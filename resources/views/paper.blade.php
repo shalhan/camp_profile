@@ -5,7 +5,7 @@
 @endsection
 
 @section('span-content')
-  Summary
+  Rekapitulasi
 @endsection
 
 @section('breadcrumb')
@@ -39,7 +39,7 @@
             <td>{{$row[1]}}</td>
             <td>{{$row[2]}}</td>
             <td>{{$row[3]}}</td>
-            <td><a href="https://scholar.google.co.id/citations?user=" . {{$row[3]}} target="_blank">View</a></td>
+            <td><a href="https://scholar.google.co.id/citations?user={{$row[4]}}" target="_blank">View</a></td>
           </tr>
           @endforeach
         </tbody>

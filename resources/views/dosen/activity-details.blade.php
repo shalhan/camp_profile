@@ -1,15 +1,15 @@
 @extends('master')
 
 @section('header-content')
-  Activity
+  Aktifitas
 @endsection
 
 @section('span-content')
-  Details
+  Detail
 @endsection
 
 @section('breadcrumb')
-  Activity
+  Aktifitas
 @endsection
 
 
@@ -43,26 +43,54 @@
           <!-- /.modal-dialog -->
         </div>
         <!-- /.modal -->
+        <!--rename modal-->
+        <div class="modal rename">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Upload Files</h4>
+              </div>
+              <form enctype="multipart/form-data" method="post" action="{{ url('activity-details/upload/' . $view->id_activities) }}">
+                {{ csrf_field() }}
+                <div class="modal-body">
+                  <div class="upload-img">
+                    <input type="file" id="exampleInputFile" name="fileActivities[]" multiple>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
       <!-- /.box-header -->
       <div class="box">
         <div class="box-header">
           <h3 class="box-title">File</h3>
           <div class="box-box-tools pull-right">
-
             <div class="add">
               <a href="" data-toggle="modal" data-target=".modal"><i class="fa fa-plus"></i></a>
             </div>
           </div>
         </div>
         <!-- /.box-header -->
-        <div class="box-body no-padding">
-          <table class="table table-striped">
+        <div class="box-body">
+         <table id="example1" class="table table-bordered table-hover">
+           <thead>
             <tr>
               <th></th>
               <th>Nama</th>
-              <th></th>
+              <th>Ukuran file</th>
               <th style="width: 50px"></th>
             </tr>
+          </thead>
+          <tbody>
             @foreach($file as $row)
             <tr>
               @if($row->ext == "csv")
@@ -80,10 +108,11 @@
               @endif
 
               <td>{{$row->file}}</td>
-              <td></td>
-              <td>
+              <td>{{number_format($row->size / 1000, 1)}} kB</td>
+              <td class="action-icon">
                 <a href="{{ url('activity-details/download/'. $row->id_files) }}" ><i class="fa fa-download black"></i></a>
-                <a href="{{ url('activity-details/delete-file/'. $row->id_files) }}" ><i class="fa fa-trash"></i></a>
+                <a href="" data-toggle="rename" data-target=".modal"><i class="fa fa-pencil accept"></i></a>
+                <a href="{{ url('student-activity-details/delete-file/'. $row->id_files) }}" ><i class="fa fa-trash delete"></i></a>
               </td>
             </tr>
             @endforeach
@@ -115,7 +144,7 @@
               <p class="cakupan">Cakupan &nbsp;</p>
             </div>
             <div class="col-sm-7">
-              <p>:&nbsp;{{ ucwords($view->nama) }}</p>
+              <p>:&nbsp;{{ ucwords($view->nama_cak) }}</p>
             </div>
             <div class="col-sm-5">
               <p class="cakupan">Mulai &nbsp;</p>
