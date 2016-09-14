@@ -43,6 +43,9 @@ Route::group(['middleware' => 'lecture'], function(){
     'as' => 'endsession'
   ]);
 
+  Route::get('lecture-download-all-file/{id}', 'ActivityController@downloadAllFile');
+  Route::get('lecture-compress-all-file/{id}', 'ActivityController@compressFile');
+
 });
 
 Route::group(['middleware' => 'admin'], function(){
@@ -67,6 +70,7 @@ Route::group(['middleware' => 'admin'], function(){
   Route::get('export-paper-summary', ['uses'=>'PaperController@exportPaperSummary', 'as'=>'export-paper-summary']);
   Route::post('export-all-student-activity', ['uses'=>'AdminController@exportStudentActivity', 'as'=>'export-all-student-activity']);
   Route::post('export-all-lecture-activity', ['uses'=>'AdminController@exportLectureActivity', 'as'=>'export-all-lecture-activity']);
+
 });
 
 //Student
@@ -79,6 +83,8 @@ Route::group(['middleware' => 'student'], function(){
   Route::get('student-activity-details/download/{id}', 'ActivityController@downloadFile');
   Route::get('student-activity-add', 'ActivityController@getAddActivity');
   Route::post('student-activity-export', ['uses'=>'ActivityController@exportActivity', 'as'=>'student-activity-export']);
+  Route::get('student-download-all-file/{id}', 'ActivityController@downloadAllFile');
+  Route::get('student-compress-all-file/{id}', 'ActivityController@compressFile');
   Route::get('logout', [
     'uses' => 'UserController@logout',
     'as' => 'logout'

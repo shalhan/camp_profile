@@ -53,10 +53,33 @@
                   <div id="filter_year" class="row none">
                     <div class="col-md-4">
                       <div  class="form-group">
+                        <label>Nama</label>
+                        <select class="form-control" name="nama">
+                          <option value="0">Semua</option>
+                          {{$viewNama = ""}}
+                          @foreach($view as $row)
+                            @if($viewNama != $row->nama)
+                              {{$viewNama = $row->nama}}
+                              <option value="{{$row->id_people}}">{{$viewNama}}</option>
+                            @endif
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div  class="form-group">
                         <label>Tahun</label>
                         <select class="form-control" name="year">
+                          <option value="0">Semua</option>
+                          <?php $viewYear = array() ?>
                           @foreach($view as $row)
-                          <option value="{{$row->year}}">{{$row->year}}</option>
+                            @if(!in_array($row->year, $viewYear))
+                              {{array_push($viewYear, $row->year)}}
+                            @endif
+                          @endforeach
+
+                          @foreach($viewYear as $row)
+                            <option value="{{$row}}">{{$row}}</option>
                           @endforeach
                         </select>
                       </div>

@@ -15,11 +15,15 @@ use Validator;
 use Image;
 use Excel;
 use DB;
+use Zipper;
 
 use App\Http\Requests;
 
 class ActivityController extends Controller
 {
+
+
+
   public function getAddActivity(){
       $viewCat = Category::get();
       $viewCak = Cakupan::get();
@@ -57,8 +61,9 @@ class ActivityController extends Controller
        $description = $request -> input('description');
 
        $date = explode(" ", $daterange);
-       $start = $date[0];
        $end = $date[2];
+       $start = date("Y-m-d", strtotime($date[0]));
+       $end = date("Y-m-d", strtotime($date[2]));
 
        $table = new Activity();
 
@@ -106,7 +111,7 @@ class ActivityController extends Controller
         $file = File::where('id_activities', $id)->get();
 
 
-        return view('dosen.activity-details', compact(['view', 'file']));
+        return view('dosen.activity-details', compact(['view', 'file', 'id']));
       }else{
         $view = Activity::join('category',
         'activities.category','=','category.id_category')
@@ -116,14 +121,16 @@ class ActivityController extends Controller
           'id_activities' => $id,
           ])->first();
         $file = File::where('id_activities', $id)->get();
-        return view('student.activity-details', compact(['view', 'file']));
+        return view('student.activity-details', compact(['view', 'file', 'id']));
 
       }
   }
 
   public function deleteDetail($id){
 
-    $view = Activity::join('files', 'activities.id_activities', '=', 'files.id_activities')->get();
+    $view = Activity::join('files', 'activities.id_activities', '=', 'files.id_activities')
+      ->where('activities.id_activities', $id)
+      ->get();
 
     if(Session::has('lectureId')){
       $people = Session::get('lectureId');
@@ -175,6 +182,8 @@ class ActivityController extends Controller
       }
     }
 
+    Session::put('statusFile', '1');
+
     if(Session::has('lectureId')){
       return redirect('lec-activity-details/' . $id);
     }else{
@@ -190,15 +199,10 @@ class ActivityController extends Controller
       $people = Session::get('studentNim');
         $folder = 'mahasiswa';
     }
-
-
-
     Storage::move($folder . '/' . $people . '/' . $id . '/' . $oldFileName , $folder . '/' . $people . '/' . $id . '/' . $newFileName);
   }
 
   public function deleteFile($id){
-    $file = File::where('id_files', $id);
-
     if(Session::has('lectureId')){
       $people = Session::get('lectureId');
         $folder = 'dosen';
@@ -207,8 +211,13 @@ class ActivityController extends Controller
         $folder = 'mahasiswa';
     }
 
+    $file = File::where('id_files', $id);
+
     unlink(storage_path() . '/app/uploads/' . $folder . '/' . $people . '/' . $file->first()->path);
     $file->delete();
+
+    Session::put('statusFile', '1');
+
 
     return redirect()->back();
   }
@@ -219,12 +228,71 @@ class ActivityController extends Controller
         $folder = 'dosen';
     }else{
       $people = Session::get('studentNim');
-        $folder = 'dosen';
+        $folder = 'mahasiswa';
     }
 
     $file = File::where('id_files', $id)->first();
 
     return response()->download(storage_path() . '/app/uploads/' . $folder . '/' . $people . '/' . $file->path);
+  }
+
+  public function compressFile($id){
+    if(Session::has('lectureId')){
+      $people = Session::get('lectureId');
+      $folder = 'dosen';
+    }else{
+      $people = Session::get('studentNim');
+      $folder = 'mahasiswa';
+    }
+
+    //compress
+    $data = Activity::select('nama_kegiatan')->where('id_activities', $id)->first();
+    $zip = str_replace(" ", "_", $data->nama_kegiatan);
+
+    $compress = glob(storage_path('/app/uploads/' . $folder . '/' . $people . '/' . $id . '/*'));
+
+    if(empty($compress)){
+      Session::flash('emptyFile', 'File tidak terdeteksi');
+      return redirect()->back();
+    }else{
+      if(file_exists(public_path('zip_file/' . $folder . '/' . $people . '/' . $zip . '.zip'))){
+        unlink(public_path('zip_file/' . $folder . '/' . $people . '/' . $zip . '.zip'));
+      }
+
+      Zipper::make('zip_file/' . $folder . '/' . $people . '/' . $zip . '.zip')->add($compress);
+      Session::flash('successCompress', 'Anda berhasil melakukan compress file');
+
+      Session::forget('statusFile');
+
+      return redirect()->back();
+    }
+
+  }
+
+  public function downloadAllFile($id){
+    if(Session::has('lectureId')){
+      $people = Session::get('lectureId');
+      $folder = 'dosen';
+    }else{
+      $people = Session::get('studentNim');
+      $folder = 'mahasiswa';
+    }
+
+    $data = Activity::select('nama_kegiatan')->where('id_activities', $id)->first();
+    $zip = str_replace(" ", "_", $data->nama_kegiatan);
+
+    if(!Session::has('statusFile')){
+      if(file_exists(public_path('zip_file/' . $folder . '/' . $people . '/' . $zip . '.zip'))){
+          return response()->download(public_path('zip_file/' . $folder . '/' . $people . '/' . $zip . '.zip'));
+      }else{
+        Session::flash('noCompressFile', 'Anda belum melakukan compress file');
+        return redirect()->back();
+      }
+    }else{
+      Session::flash('updateCompressFile', 'File anda telah diperbaharui, lakukan compress file terlebih dahulu');
+      return redirect()->back();
+    }
+
   }
 
   public function exportActivity(Request $request){

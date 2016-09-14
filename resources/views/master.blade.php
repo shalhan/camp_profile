@@ -218,7 +218,7 @@ function cancel(){
 //Date range picker
 $('#reservation').daterangepicker({
   locale: {
-    format: 'YYYY-MM-DD'
+    format: 'DD-MM-YYYY'
   }
 });
 </script>

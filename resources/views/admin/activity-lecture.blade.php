@@ -69,12 +69,16 @@
                       <div  class="form-group">
                         <label>Tahun</label>
                         <select class="form-control" name="year">
-                          {{$viewYear = ""}}
+                          <option value="0">Semua</option>
+                          <?php $viewYear = array() ?>
                           @foreach($view as $row)
-                            @if($viewYear != $row->year)
-                              {{$viewYear = $row->year}}
-                              <option value="{{$viewYear}}">{{$viewYear}}</option>
+                            @if(!in_array($row->year, $viewYear))
+                              {{array_push($viewYear, $row->year)}}
                             @endif
+                          @endforeach
+
+                          @foreach($viewYear as $row)
+                            <option value="{{$row}}">{{$row}}</option>
                           @endforeach
                         </select>
                       </div>

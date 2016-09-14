@@ -84,7 +84,7 @@ class AdminController extends Controller
 
     public function addCakupan(Request $request){
       $view = Cakupan::insert(
-        ['nama' => $request->input('newcakupan')]
+        ['nama_cak' => $request->input('newcakupan')]
       );
 
       return redirect('setting');
@@ -226,13 +226,7 @@ class AdminController extends Controller
       return redirect()->back();
     }
 
-    // public function exportPaperSummary(){
-    //   $data = Paper:
-    //   Excel::create('Paper Summary', function($excel) {
-    //     // Our first sheet
-    //     $excel->sheet('First sheet', function($sheet) {
-    //       $sheet->loadView('admin.');
-    //     });
-    //   })->export('xls');
-    // }
+    public function adminExportFile($id){
+      
+    }
 }

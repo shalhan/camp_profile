@@ -64,6 +64,12 @@ p.username{
   padding: 6px;
   font-size: 16px;
   cursor: pointer;
+  text-align: right;
+  display: inline-flex;
+}
+
+.add i{
+  margin: 0 8px;
 }
 
 .ext img{
@@ -84,6 +90,10 @@ p.username{
 
 .none{
   display: none;
+}
+
+.gray{
+  color: #95a5a6;
 }
 
 @media screen and (min-width: 720px) {

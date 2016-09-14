@@ -75,6 +75,8 @@
           <h3 class="box-title">File</h3>
           <div class="box-box-tools pull-right">
             <div class="add">
+              <a href="{{ url('lecture-compress-all-file/' . $id)}}" ><i class="fa fa-compress"></i></a>
+              <a href="{{ url('lecture-download-all-file/' . $id)}}" ><i class="fa fa-download"></i></a>
               <a href="" data-toggle="modal" data-target=".modal"><i class="fa fa-plus"></i></a>
             </div>
           </div>
@@ -82,6 +84,23 @@
         <!-- /.box-header -->
         <div class="box-body">
          <table id="example1" class="table table-bordered table-hover">
+           @if(Session::has('noCompressFile'))
+           <div class="callout callout-danger">
+               <p>{{Session::get('noCompressFile')}}</p>
+             </div>
+           @elseif(Session::has('successCompress'))
+           <div class="callout callout-success">
+               <p>{{Session::get('successCompress')}}</p>
+             </div>
+           @elseif(Session::has('emptyFile'))
+           <div class="callout callout-danger">
+               <p>{{Session::get('emptyFile')}}</p>
+             </div>
+             @elseif(Session::has('updateCompressFile'))
+             <div class="callout callout-warning">
+                 <p>{{Session::get('updateCompressFile')}}</p>
+               </div>
+           @endif
            <thead>
             <tr>
               <th></th>
@@ -110,9 +129,9 @@
               <td>{{$row->file}}</td>
               <td>{{number_format($row->size / 1000, 1)}} kB</td>
               <td class="action-icon">
-                <a href="{{ url('activity-details/download/'. $row->id_files) }}" ><i class="fa fa-download black"></i></a>
-                <a href="" data-toggle="rename" data-target=".modal"><i class="fa fa-pencil accept"></i></a>
-                <a href="{{ url('student-activity-details/delete-file/'. $row->id_files) }}" ><i class="fa fa-trash delete"></i></a>
+                <a href="{{ url('activity-details/download/'. $row->id_files) }}" ><i class="fa fa-download gray"></i></a>
+                <a href="" data-toggle="rename" data-target=".modal"><i class="fa fa-pencil gray"></i></a>
+                <a href="{{ url('activity-details/delete-file/'. $row->id_files) }}" ><i class="fa fa-trash gray"></i></a>
               </td>
             </tr>
             @endforeach
